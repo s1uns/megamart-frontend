@@ -1,0 +1,103 @@
+[
+    {
+      "id": 0,
+      "imageUrl": "https://content1.rozetka.com.ua/goods/images/preview/6944588.jpg",
+      "title": "Mortal Kombat X",
+      "types": ["Classic", "XL Edition"],
+      "sizes": [26, 30, 40],
+      "price": 10.99,
+      "category": 0,
+      "rating": 4
+    },
+    {
+      "id": 1,
+      "imageUrl": "https://content1.rozetka.com.ua/goods/images/preview/11844291.jpg",
+      "title": "Mortal Kombat 11",
+      "types": ["Classic", "Ultimate"],
+      "sizes": [26, 40],
+      "price": 10,
+      "category": 0,
+      "rating": 6
+    },
+    {
+      "id": 2,
+      "imageUrl": "https://content2.rozetka.com.ua/goods/images/big/226328710.jpg",
+      "title": "The Godfather. Mario Puzo",
+      "types": ["Electronic", "Hard Cover"],
+      "sizes": [26, 40],
+      "price": 9.50,
+      "category": 1,
+      "rating": 4
+    },
+    {
+      "id": 3,
+      "imageUrl": "https://content1.rozetka.com.ua/goods/images/preview/6944588.jpg",
+      "title": "Mortal Kombat X",
+      "types": ["Classic", "XL Edition"],
+      "sizes": [26, 30, 40],
+      "price": 10.99,
+      "category": 0,
+      "rating": 4
+    },
+    {
+      "id": 4,
+      "imageUrl": "https://content1.rozetka.com.ua/goods/images/preview/11844291.jpg",
+      "title": "Mortal Kombat 11",
+      "types": ["Classic", "Ultimate"],
+      "sizes": [26, 40],
+      "price": 10,
+      "category": 0,
+      "rating": 6
+    },
+    {
+      "id": 5,
+      "imageUrl": "https://content1.rozetka.com.ua/goods/images/preview/11844291.jpg",
+      "title": "Mortal Kombat 11",
+      "types": ["Classic", "Ultimate"],
+      "sizes": [26, 40],
+      "price": 10,
+      "category": 0,
+      "rating": 6
+    },
+    {
+      "id": 6,
+      "imageUrl": "https://content2.rozetka.com.ua/goods/images/big/226328710.jpg",
+      "title": "The Godfather. Mario Puzo",
+      "types": ["Electronic", "Hard Cover"],
+      "sizes": [26, 40],
+      "price": 9.50,
+      "category": 1,
+      "rating": 4
+    },
+    {
+      "id": 7,
+      "imageUrl": "https://content2.rozetka.com.ua/goods/images/big/226328710.jpg",
+      "title": "The Godfather. Mario Puzo",
+      "types": ["Electronic", "Hard Cover"],
+      "sizes": [26, 40],
+      "price": 9.50,
+      "category": 1,
+      "rating": 4
+    },
+    {
+      "id": 8,
+      "imageUrl": "https://content1.rozetka.com.ua/goods/images/preview/6944588.jpg",
+      "title": "Mortal Kombat X",
+      "types": ["Classic", "XL Edition"],
+      "sizes": [26, 30, 40],
+      "price": 10.99,
+      "category": 0,
+      "rating": 4
+    },
+    {
+      "id": 9,
+      "imageUrl": "https://content1.rozetka.com.ua/goods/images/preview/6944588.jpg",
+      "title": "Mortal Kombat X",
+      "types": ["Classic", "XL Edition"],
+      "sizes": [26, 30, 40],
+      "price": 10.99,
+      "category": 0,
+      "rating": 4
+    }
+  ]
+  
