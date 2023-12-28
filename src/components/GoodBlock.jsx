@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function GoodBlock({ title, price, imageUrl, types, sizes }) {
+export default function GoodBlock({ title, price, imageUrl, types }) {
     const [goodCount, setGoodCount] = useState(0);
     const [activeType, setActiveType] = useState(0);
     const onClickAdd = () => {
