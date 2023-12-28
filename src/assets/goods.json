@@ -1,17 +1,16 @@
 [
     {
       "id": 0,
-      "imageUrl": "https://content1.rozetka.com.ua/goods/images/preview/6944588.jpg",
+      "imageUrl": "https://images.pushsquare.com/0adb802fd8a28/mortal-kombat-x-cover.cover_large.jpg",
       "title": "Mortal Kombat X",
       "types": ["Classic", "XL Edition"],
-      "sizes": [26, 30, 40],
       "price": 10.99,
       "category": 0,
       "rating": 4
     },
     {
       "id": 1,
-      "imageUrl": "https://content1.rozetka.com.ua/goods/images/preview/11844291.jpg",
+      "imageUrl": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a98cff5d-a612-49d8-a0db-175994384b20/dd570dn-24268b86-b38f-4dbc-9914-c608c0ad308c.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2E5OGNmZjVkLWE2MTItNDlkOC1hMGRiLTE3NTk5NDM4NGIyMFwvZGQ1NzBkbi0yNDI2OGI4Ni1iMzhmLTRkYmMtOTkxNC1jNjA4YzBhZDMwOGMucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.31DQh3mjEEZHkAgXNuGK-EPgQdBY7ppw8szV7zoc6ok",
       "title": "Mortal Kombat 11",
       "types": ["Classic", "Ultimate"],
       "sizes": [26, 40],
@@ -31,7 +30,7 @@
     },
     {
       "id": 3,
-      "imageUrl": "https://content1.rozetka.com.ua/goods/images/preview/6944588.jpg",
+      "imageUrl": "https://images.pushsquare.com/0adb802fd8a28/mortal-kombat-x-cover.cover_large.jpg",
       "title": "Mortal Kombat X",
       "types": ["Classic", "XL Edition"],
       "sizes": [26, 30, 40],
@@ -41,7 +40,7 @@
     },
     {
       "id": 4,
-      "imageUrl": "https://content1.rozetka.com.ua/goods/images/preview/11844291.jpg",
+      "imageUrl": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a98cff5d-a612-49d8-a0db-175994384b20/dd570dn-24268b86-b38f-4dbc-9914-c608c0ad308c.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2E5OGNmZjVkLWE2MTItNDlkOC1hMGRiLTE3NTk5NDM4NGIyMFwvZGQ1NzBkbi0yNDI2OGI4Ni1iMzhmLTRkYmMtOTkxNC1jNjA4YzBhZDMwOGMucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.31DQh3mjEEZHkAgXNuGK-EPgQdBY7ppw8szV7zoc6ok",
       "title": "Mortal Kombat 11",
       "types": ["Classic", "Ultimate"],
       "sizes": [26, 40],
@@ -51,7 +50,7 @@
     },
     {
       "id": 5,
-      "imageUrl": "https://content1.rozetka.com.ua/goods/images/preview/11844291.jpg",
+      "imageUrl": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a98cff5d-a612-49d8-a0db-175994384b20/dd570dn-24268b86-b38f-4dbc-9914-c608c0ad308c.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2E5OGNmZjVkLWE2MTItNDlkOC1hMGRiLTE3NTk5NDM4NGIyMFwvZGQ1NzBkbi0yNDI2OGI4Ni1iMzhmLTRkYmMtOTkxNC1jNjA4YzBhZDMwOGMucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.31DQh3mjEEZHkAgXNuGK-EPgQdBY7ppw8szV7zoc6ok",
       "title": "Mortal Kombat 11",
       "types": ["Classic", "Ultimate"],
       "sizes": [26, 40],
@@ -81,7 +80,7 @@
     },
     {
       "id": 8,
-      "imageUrl": "https://content1.rozetka.com.ua/goods/images/preview/6944588.jpg",
+      "imageUrl": "https://images.pushsquare.com/0adb802fd8a28/mortal-kombat-x-cover.cover_large.jpg",
       "title": "Mortal Kombat X",
       "types": ["Classic", "XL Edition"],
       "sizes": [26, 30, 40],
@@ -91,7 +90,7 @@
     },
     {
       "id": 9,
-      "imageUrl": "https://content1.rozetka.com.ua/goods/images/preview/6944588.jpg",
+      "imageUrl": "https://images.pushsquare.com/0adb802fd8a28/mortal-kombat-x-cover.cover_large.jpg",
       "title": "Mortal Kombat X",
       "types": ["Classic", "XL Edition"],
       "sizes": [26, 30, 40],
