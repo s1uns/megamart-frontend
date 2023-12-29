@@ -19,9 +19,7 @@ function App() {
                 setItems(data)
             }
             );
-      }, [items]); // Empty dependency array, runs only once
-
-      console.log(items)
+      }, []); // Empty dependency array, runs only once
 
     return (
         <div className="wrapper">
@@ -41,7 +39,7 @@ function App() {
                                     title={item.name}
                                     price={item.price}
                                     imageUrl={item.imgUrl}
-                                    types={pizzas[0].types}
+                                    // types={item.goodOptions}
                                 ></GoodBlock>
                             );
                         })}

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
-export default function GoodBlock({ title, price, imageUrl, types }) {
+export default function GoodBlock({ title, price, imageUrl }) {
     const [goodCount, setGoodCount] = useState(0);
-    const [activeType, setActiveType] = useState(0);
+    // const [activeType, setActiveType] = useState(types[0].id);
     const onClickAdd = () => {
         setGoodCount(goodCount + 1);
     };
@@ -13,19 +13,19 @@ export default function GoodBlock({ title, price, imageUrl, types }) {
                 <img className="good-block__img-container__image" src={imageUrl} alt="Good" />
             </div>
             <h4 className="good-block__title">{title}</h4>
-            <div className="good-block__selector">
+            {/* <div className="good-block__selector">
                 <ul>
-                    {types.map((type, index) => (
+                    {types.map(type => (
                         <li
-                            className={activeType === index ? "active" : ""}
-                            onClick={() => setActiveType(index)}
-                            key={index}
+                            className={activeType === type.id ? "active" : ""}
+                            onClick={() => setActiveType(type.id)}
+                            key={type.id}
                         >
-                            {type}
+                            {type.optionName}
                         </li>
                     ))}
                 </ul>
-            </div>
+            </div> */}
             <div className="good-block__bottom">
                 <div className="good-block__price">from {price} $</div>
                 <button
