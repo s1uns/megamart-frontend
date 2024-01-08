@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function GoodBlock({ title, price, imageUrl }) {
+export default function GoodBlock({ title, price, imageUrl, sellerName }) {
     const [goodCount, setGoodCount] = useState(0);
     // const [activeType, setActiveType] = useState(types[0].id);
     const onClickAdd = () => {
@@ -10,7 +10,11 @@ export default function GoodBlock({ title, price, imageUrl }) {
     return (
         <div className="good-block">
             <div className="good-block__img-container">
-                <img className="good-block__img-container__image" src={imageUrl} alt="Good" />
+                <img
+                    className="good-block__img-container__image"
+                    src={imageUrl}
+                    alt="Good"
+                />
             </div>
             <h4 className="good-block__title">{title}</h4>
             {/* <div className="good-block__selector">
@@ -27,7 +31,7 @@ export default function GoodBlock({ title, price, imageUrl }) {
                 </ul>
             </div> */}
             <div className="good-block__bottom">
-                <div className="good-block__price">from {price} $</div>
+                <div className="good-block__price">{price} $</div>
                 <button
                     className="button button--outline button--add"
                     onClick={onClickAdd}
@@ -47,6 +51,10 @@ export default function GoodBlock({ title, price, imageUrl }) {
                     <span>Add</span>
                     <i>{goodCount}</i>
                 </button>
+                <div className="seller">
+                    <div> Seller:</div>
+                    <div className="name">{sellerName}</div>
+                </div>
             </div>
         </div>
     );

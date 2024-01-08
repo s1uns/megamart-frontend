@@ -11,15 +11,10 @@ import { useState, useEffect } from "react";
 function App() {
     const [items, setItems] = useState([]);
     useEffect(() => {
-        // Fetch data from an API
         fetch('https://localhost:7295/api/goods/list')
           .then(response => response.json())
-          .then(
-            data => {
-                setItems(data)
-            }
-            );
-      }, []); // Empty dependency array, runs only once
+          .then(data => setItems(data));
+      }, []);
 
     return (
         <div className="wrapper">
@@ -40,6 +35,7 @@ function App() {
                                     price={item.price}
                                     imageUrl={item.imgUrl}
                                     // types={item.goodOptions}
+                                    sellerName = {item.sellerName}
                                 ></GoodBlock>
                             );
                         })}
