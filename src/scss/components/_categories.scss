@@ -6,7 +6,6 @@
         flex-wrap: wrap;
 
         li {
-            background-color: #f9f9f9;
             padding: 13px 30px;
             border-radius: 30px;
             margin-right: 10px;
@@ -16,16 +15,17 @@
             @include noselect();
 
             &:hover {
-                background-color: darken(#f9f9f9, 2%);
+                background-color: darken(#f9f9f9, 2%) !important;
             }
 
             &:active {
-                background-color: darken(#f9f9f9, 5%);
+                background-color: darken(#f9f9f9, 5%) !important;
             }
 
             &.active {
-                background-color: #282828;
-                color: #fff;
+                background-color: #282828 !important;
+                color: #fff !important;
+                box-shadow: -5px -5px 5px #0000FF, 5px 5px 7px #FFFF00;
             }
         }
     }
