@@ -8,21 +8,27 @@ import Skeleton from "../components/GoodBlock/Skeleton";
 const Home = () => {
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [categoryId, setCategoryId] = useState('');
+    const [sortType, setSortType] = useState();
+
+    console.log(categoryId)
 
     useEffect(() => {
-        fetch("https://localhost:7295/api/goods/list")
+        setIsLoading(true);
+        fetch("https://localhost:7295/api/goods/list?category=" + categoryId)
             .then((response) => response.json())
-            .then((data) => {
+            .then((data) => {    
                 setItems(data);
                 setIsLoading(false);
             });
         window.scrollTo(0, 0);
-    }, []);
+    }, [categoryId]);
 
+    
     return (
         <div className="container">
             <div className="content__top">
-                <Categories />
+                <Categories value={categoryId} onClickCategory={(id) => setCategoryId(id)} />
                 <Sort />
             </div>
             <h2 className="content__title">All goods</h2>
@@ -44,6 +50,6 @@ const Home = () => {
             </div>
         </div>
     );
-}
+};
 
 export default Home;
