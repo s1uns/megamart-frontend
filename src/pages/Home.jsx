@@ -8,22 +8,41 @@ import Skeleton from "../components/GoodBlock/Skeleton";
 const Home = () => {
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [categoryId, setCategoryId] = useState("");
+    const [sortType, setSortType] = useState({
+        name: "popularity",
+        sortProperty: "rating",
+    });
+    const [sortOrder, setSortOrder] = useState(true);
 
     useEffect(() => {
-        fetch("https://localhost:7295/api/goods/list")
+        setIsLoading(true);
+        fetch(
+            "https://localhost:7295/api/goods/list?category=" +
+                categoryId +
+                `&sortBy=${sortType.sortProperty}&order=${sortOrder}`
+        )
             .then((response) => response.json())
             .then((data) => {
                 setItems(data);
                 setIsLoading(false);
             });
         window.scrollTo(0, 0);
-    }, []);
+    }, [categoryId, sortType.sortProperty, sortOrder]);
 
     return (
         <div className="container">
             <div className="content__top">
-                <Categories />
-                <Sort />
+                <Categories
+                    value={categoryId}
+                    onClickCategory={(id) => setCategoryId(id)}
+                />
+                <Sort
+                    value={sortType}
+                    onChangeSortType={(id) => setSortType(id)}
+                    sortOrder={sortOrder}
+                    onChangeSortOrder={(order) => setSortOrder(sortOrder => order)}
+                />
             </div>
             <h2 className="content__title">All goods</h2>
             <div className="content__items">
@@ -44,6 +63,6 @@ const Home = () => {
             </div>
         </div>
     );
-}
+};
 
 export default Home;

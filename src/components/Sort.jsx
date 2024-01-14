@@ -1,14 +1,25 @@
 import React, { useState } from "react";
 
-export default function Sort() {
+export default function Sort({
+    value,
+    onChangeSortType,
+    sortOrder,
+    onChangeSortOrder,
+}) {
     const [isVisible, setIsVisible] = useState(false);
-    const sortList = ["popularity", "price", "alphabet"];
-    const [selected, setSelected] = useState(0);
-    const sortName = sortList[selected];
+    const sortList = [
+        { name: "popularity", sortProperty: "rating" },
+        { name: "price", sortProperty: "price" },
+        { name: "alphabet", sortProperty: "title" },
+    ];
 
-    const selectItem = (index) => {
-        setSelected(index);
-        setIsVisible(!isVisible);
+    const selectItem = (element) => {
+        if (element.sortProperty === value.sortProperty) {
+            onChangeSortOrder(!sortOrder);
+        } else {
+            onChangeSortOrder(true);
+        }
+        onChangeSortType(element);
     };
 
     return (
@@ -28,7 +39,7 @@ export default function Sort() {
                 </svg>
                 <b>Sort by:</b>
                 <span onClick={() => setIsVisible(!isVisible)}>
-                    {sortName}
+                    {value.name}
                 </span>
             </div>
             {isVisible && (
@@ -38,11 +49,19 @@ export default function Sort() {
                             <li
                                 key={index}
                                 onClick={() => {
-                                    selectItem(index);
+                                    selectItem(item);
                                 }}
-                                className={selected === index ? "active" : ""}
+                                className={
+                                    value.sortProperty === item.sortProperty
+                                        ? "active"
+                                        : ""
+                                }
                             >
-                                {item}
+                                {item.name}
+                                {sortOrder === false &&
+                                value.sortProperty === item.sortProperty
+                                    ? " ↓"
+                                    : " ↑"}
                             </li>
                         ))}
                     </ul>

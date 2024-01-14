@@ -1,27 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-export default function Categories() {
-    const [activeIndex, setActiveIndex] = useState(5);
-    const categories = [
-        "All",
-        "Food",
-        "Tech",
-        "Cloth",
-        "Toys",
-        "For Office",
-    ];
+export default function Categories({ value, onClickCategory }) {
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        fetch("https://localhost:7295/api/categories/list")
+            .then((response) => response.json())
+            .then((data) => {
+                setCategories(data);
+            });
+    }, []);
 
     return (
         <div className="categories">
             <ul>
-                {categories.map((item, index) => {
+                <li
+                    style={{ backgroundColor: "#9b59b6" }}
+                    onClick={() => onClickCategory('')}
+                    className={value === '' ? "active" : ""}
+                >
+                    All
+                </li>
+                {categories.map((item) => {
                     return (
                         <li
-                            key={index}
-                            onClick={() => setActiveIndex(index)}
-                            className={activeIndex === index ? "active" : ""}
+                            style={{
+                                backgroundColor: `#${
+                                    item.backgroundColor
+                                        ? item.backgroundColor
+                                        : "9b59b6"
+                                }`,
+                                color: `#${item.fontColor}`,
+                            }}
+                            key={item.id}
+                            onClick={() => onClickCategory(item.id)}
+                            className={value === item.id ? "active" : ""}
                         >
-                            {item}
+                            {item.name}
                         </li>
                     );
                 })}
