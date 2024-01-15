@@ -57,14 +57,12 @@ body {
         justify-content: space-between;
 
         @media (max-width: 1260px) {
-            // flex-direction: column-reverse;
-
             .categories {
                 width: 100%;
                 overflow: auto;
 
                 ul {
-                    width: 785px;
+                    width: 100vw;
                 }
             }
 
@@ -80,11 +78,18 @@ body {
         @media (max-width: 820px) {
             .categories {
                 margin-top: 30px;
+                width: 100%;
+                overflow: auto;
+
+                ul {
+                    width: 100vw;
+                }
             }
             flex-direction: column-reverse;
         }
 
         @media (max-width: 390px) {
+            flex-direction: column-reverse;
             .categories {
                 ul {
                     li {
@@ -92,7 +97,6 @@ body {
                     }
                 }
             }
-            flex-direction: column-reverse;
         }
     }
 }
