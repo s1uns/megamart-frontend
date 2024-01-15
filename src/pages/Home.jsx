@@ -41,7 +41,9 @@ const Home = () => {
                     value={sortType}
                     onChangeSortType={(id) => setSortType(id)}
                     sortOrder={sortOrder}
-                    onChangeSortOrder={(order) => setSortOrder(sortOrder => order)}
+                    onChangeSortOrder={(order) =>
+                        setSortOrder((sortOrder) => order)
+                    }
                 />
             </div>
             <h2 className="content__title">All goods</h2>
