@@ -4,63 +4,50 @@ import Sort from "../components/Sort";
 import GoodBlock from "../components/GoodBlock";
 import { useState, useEffect } from "react";
 import Skeleton from "../components/GoodBlock/Skeleton";
-import ReactPaginate from "react-paginate";
 import Pagination from "../components/Pagination";
 import { SearchContext } from "../App";
+import { useDispatch, useSelector } from "react-redux";
+import { setCategoryId } from "../redux/slices/filterSlice";
+import axios from "axios";
 
 const Home = () => {
+    const dispatch = useDispatch();
+    const { categoryId, sortType, sortOrder } = useSelector(
+        (state) => state.filterSlice
+    );
+    const sortProperty = sortType.sortProperty;
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [categoryId, setCategoryId] = useState("");
-    const [sortType, setSortType] = useState({
-        name: "popularity",
-        sortProperty: "rating",
-    });
-    const [sortOrder, setSortOrder] = useState(true);
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(1);
     const { searchValue } = useContext(SearchContext);
 
+    const onChangeCategory = (id) => {
+        dispatch(setCategoryId(id));
+    };
 
     useEffect(() => {
         setIsLoading(true);
-        fetch(
-            `https://localhost:7295/api/goods/list?page=${currentPage}&limit=5&category=${categoryId}&sortBy=${sortType.sortProperty}&order=${sortOrder}&search=${searchValue}`
-        )
-            .then((response) => response.json())
-            .then((data) => {
-                if(data.length < 0){
-                    setCurrentPage(0);
-                }
-
-                setItems(data.data);
-                setTotalPages(data.totalPages);
+        axios
+            .get(
+                `https:localhost:7295/api/goods/list?page=${currentPage}&limit=5&category=${categoryId}&sortBy=${sortProperty}&order=${sortOrder}&search=${searchValue}`
+            )
+            .then((response) => {
+                setItems(response.data.data);
+                setTotalPages(response.data.totalPages);
                 setIsLoading(false);
             });
         window.scrollTo(0, 0);
-    }, [
-        categoryId,
-        sortType.sortProperty,
-        sortOrder,
-        searchValue,
-        currentPage,
-    ]);
+    }, [categoryId, sortProperty, sortOrder, searchValue, currentPage]);
 
     return (
         <div className="container">
             <div className="content__top">
                 <Categories
                     value={categoryId}
-                    onClickCategory={(id) => setCategoryId(id)}
+                    onClickCategory={(id) => onChangeCategory(id)}
                 />
-                <Sort
-                    value={sortType}
-                    onChangeSortType={(id) => setSortType(id)}
-                    sortOrder={sortOrder}
-                    onChangeSortOrder={(order) =>
-                        setSortOrder((sortOrder) => order)
-                    }
-                />
+                <Sort />
             </div>
             <h2 className="content__title">All goods</h2>
             <div className="content__items">
