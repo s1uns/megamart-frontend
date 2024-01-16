@@ -1,25 +1,25 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setSortType, setSortOrder } from "../redux/slices/filterSlice";
 
-export default function Sort({
-    value,
-    onChangeSortType,
-    sortOrder,
-    onChangeSortOrder,
-}) {
+const sortList = [
+    { name: "popularity", sortProperty: "rating" },
+    { name: "price", sortProperty: "price" },
+    { name: "alphabet", sortProperty: "title" },
+];
+
+export default function Sort() {
+    const dispatch = useDispatch();
+    const {sortType, sortOrder} = useSelector((state) => state.filterSlice);
     const [isVisible, setIsVisible] = useState(false);
-    const sortList = [
-        { name: "popularity", sortProperty: "rating" },
-        { name: "price", sortProperty: "price" },
-        { name: "alphabet", sortProperty: "title" },
-    ];
 
     const selectItem = (element) => {
-        if (element.sortProperty === value.sortProperty) {
-            onChangeSortOrder(!sortOrder);
+        if (element.sortProperty === sortType.sortProperty) {
+            dispatch(setSortOrder(!sortOrder));
         } else {
-            onChangeSortOrder(true);
+            dispatch(setSortOrder(true));
         }
-        onChangeSortType(element);
+        dispatch(setSortType(element));
     };
 
     return (
@@ -39,7 +39,7 @@ export default function Sort({
                 </svg>
                 <b>Sort by:</b>
                 <span onClick={() => setIsVisible(!isVisible)}>
-                    {value.name}
+                    {sortType.name}
                 </span>
             </div>
             {isVisible && (
@@ -52,14 +52,14 @@ export default function Sort({
                                     selectItem(item);
                                 }}
                                 className={
-                                    value.sortProperty === item.sortProperty
+                                    sortType.sortProperty === item.sortProperty
                                         ? "active"
                                         : ""
                                 }
                             >
                                 {item.name}
                                 {sortOrder === false &&
-                                value.sortProperty === item.sortProperty
+                                sortType.sortProperty === item.sortProperty
                                     ? " ↓"
                                     : " ↑"}
                             </li>
