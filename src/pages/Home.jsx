@@ -7,23 +7,26 @@ import Skeleton from "../components/GoodBlock/Skeleton";
 import Pagination from "../components/Pagination";
 import { SearchContext } from "../App";
 import { useDispatch, useSelector } from "react-redux";
-import { setCategoryId } from "../redux/slices/filterSlice";
+import { setCategoryId, setCurrentPage } from "../redux/slices/filterSlice";
 import axios from "axios";
 
 const Home = () => {
     const dispatch = useDispatch();
-    const { categoryId, sortType, sortOrder } = useSelector(
+    const { categoryId, sortType, sortOrder, currentPage } = useSelector(
         (state) => state.filterSlice
     );
     const sortProperty = sortType.sortProperty;
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(1);
     const { searchValue } = useContext(SearchContext);
 
-    const onChangeCategory = (id) => {
-        dispatch(setCategoryId(id));
+    const onChangeCategory = categoryId => {
+        dispatch(setCategoryId(categoryId));
+    };
+
+    const onChangePage = page => {
+        dispatch(setCurrentPage(page));
     };
 
     useEffect(() => {
@@ -67,7 +70,8 @@ const Home = () => {
                       ))}
             </div>
             <Pagination
-                onChangePage={(page) => setCurrentPage(page)}
+                currentPage={currentPage}
+                onChangePage={onChangePage}
                 totalPages={totalPages}
             />
         </div>
