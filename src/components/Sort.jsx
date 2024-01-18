@@ -10,7 +10,7 @@ export const sortList = [
 
 export default function Sort() {
     const dispatch = useDispatch();
-    const { sortType, sortOrder } = useSelector((state) => state.filterSlice);
+    const { sortType, sortOrder } = useSelector((state) => state.filter);
     const [isVisible, setIsVisible] = useState(false);
     const sortRef = useRef();
 
