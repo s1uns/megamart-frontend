@@ -1,46 +1,99 @@
 import React, { useContext } from "react";
 import Categories from "../components/Categories";
-import Sort from "../components/Sort";
+import Sort, { sortList } from "../components/Sort";
 import GoodBlock from "../components/GoodBlock";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Skeleton from "../components/GoodBlock/Skeleton";
 import Pagination from "../components/Pagination";
 import { SearchContext } from "../App";
 import { useDispatch, useSelector } from "react-redux";
-import { setCategoryId, setCurrentPage } from "../redux/slices/filterSlice";
+import {
+    initialState,
+    setCategoryId,
+    setCurrentPage,
+    setFilters,
+} from "../redux/slices/filterSlice";
 import axios from "axios";
+import qs from "qs";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
     const dispatch = useDispatch();
     const { categoryId, sortType, sortOrder, currentPage } = useSelector(
         (state) => state.filterSlice
     );
+    const isFilter = useRef(false);
+    const isMounted = useRef(false);
     const sortProperty = sortType.sortProperty;
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [totalPages, setTotalPages] = useState(1);
     const { searchValue } = useContext(SearchContext);
+    const navigate = useNavigate();
 
-    const onChangeCategory = categoryId => {
+    const onChangeCategory = (categoryId) => {
         dispatch(setCategoryId(categoryId));
     };
 
-    const onChangePage = page => {
+    const onChangePage = (page) => {
         dispatch(setCurrentPage(page));
     };
 
-    useEffect(() => {
+    const fetchGoods = () => {
         setIsLoading(true);
         axios
             .get(
-                `https:localhost:7295/api/goods/list?page=${currentPage}&limit=5&category=${categoryId}&sortBy=${sortProperty}&order=${sortOrder}&search=${searchValue}`
+                `https:localhost:7295/api/goods/list?page=${currentPage}&limit=5&category=${categoryId}&sortBy=${sortProperty}&sortOrder=${sortOrder}&search=${searchValue}`
             )
             .then((response) => {
                 setItems(response.data.data);
                 setTotalPages(response.data.totalPages);
                 setIsLoading(false);
             });
+    };
+
+    //If params were changed and the first render occured
+    useEffect(() => {
+        if (isMounted.current) {
+            const queryString = qs.stringify({
+                sortProperty: sortType.sortProperty,
+                sortOrder,
+                categoryId,
+                currentPage,
+            });
+            navigate(`?${queryString}`);
+        }
+
+        isMounted.current = true;
+    }, [categoryId, sortProperty, sortOrder, searchValue, currentPage]);
+
+    //If the first render occured, then check the URL and set filters to redux storage
+    useEffect(() => {
+        if (window.location.search) {
+            const params = qs.parse(window.location.search.substring(1));
+            if (
+                initialState.categoryId === params.categoryId &&
+                initialState.selectedSort === params.selectedSort &&
+                initialState.currentPage === Number(params.currentPage)
+            ) {
+                fetchGoods();
+            }
+            const sortType = sortList.find(
+                (sortType) => sortType.sortProperty === params.sortProperty
+            );
+            dispatch(setFilters({ ...params, sortType }));
+            isFilter.current = true;
+        }
+    }, []);
+
+    //If the first render occured, fetch the goods
+    useEffect(() => {
         window.scrollTo(0, 0);
+        if (!isFilter.current) {
+            fetchGoods();
+        }
+
+        isFilter.current = false;
     }, [categoryId, sortProperty, sortOrder, searchValue, currentPage]);
 
     return (
