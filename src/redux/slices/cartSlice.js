@@ -37,7 +37,7 @@ export const cartSlice = createSlice({
             );
             state.totalPrice =
                 Math.round((state.totalPrice - findItem.price) * 100) / 100;
-            if (findItem.count != 1) {
+            if (findItem.count !== 1) {
                 findItem.count--;
             } else {
                 state.items = state.items.filter(
