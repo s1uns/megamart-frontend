@@ -39,17 +39,29 @@ const Home = () => {
         dispatch(setCurrentPage(page));
     };
 
-    const fetchGoods = () => {
+    const fetchGoods = async () => {
         setIsLoading(true);
-        axios
-            .get(
+        // axios
+        //     .get(
+        //         `https:localhost:7295/api/goods/list?page=${currentPage}&limit=5&category=${categoryId}&sortBy=${sortProperty}&sortOrder=${sortOrder}&search=${searchValue}`
+        //     )
+        //     .then((response) => {
+        //         setItems(response.data.data);
+        //         setTotalPages(response.data.totalPages);
+        //         setIsLoading(false);
+        //     });
+
+        try {
+            const items = await axios.get(
                 `https:localhost:7295/api/goods/list?page=${currentPage}&limit=5&category=${categoryId}&sortBy=${sortProperty}&sortOrder=${sortOrder}&search=${searchValue}`
-            )
-            .then((response) => {
-                setItems(response.data.data);
-                setTotalPages(response.data.totalPages);
-                setIsLoading(false);
-            });
+            );
+            setItems(items.data.data);
+            setTotalPages(items.data.totalPages);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     //If params were changed and the first render occured
