@@ -20,7 +20,7 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
     const dispatch = useDispatch();
     const { categoryId, sortType, sortOrder, currentPage } = useSelector(
-        (state) => state.filterSlice
+        (state) => state.filter
     );
     const isFilter = useRef(false);
     const isMounted = useRef(false);
@@ -114,11 +114,14 @@ const Home = () => {
                     : items.map((item) => (
                           <GoodBlock
                               key={item.id}
+                              id={item.id}
                               title={item.name}
                               price={item.price}
                               imageUrl={item.imgUrl}
-                              // types={item.goodOptions}
                               sellerName={item.sellerName}
+                              goodOptions={
+                                  item.goodOptions ? item.goodOptions : []
+                              }
                           />
                       ))}
             </div>

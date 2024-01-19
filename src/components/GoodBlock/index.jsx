@@ -1,11 +1,33 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addItem } from "../../redux/slices/cartSlice";
 
-export default function GoodBlock({ title, price, imageUrl, sellerName }) {
-    const [goodCount, setGoodCount] = useState(0);
-    // const [activeType, setActiveType] = useState(types[0].id);
+export default function GoodBlock({
+    id,
+    title,
+    price,
+    imageUrl,
+    sellerName,
+    goodOptions,
+}) {
+    const [activeOption, setActiveOption] = useState(
+        goodOptions.length > 0 ? goodOptions[0] : null
+    );
+    const {count} = useSelector(state => state.cart.items.find(item => item.id === id)) || 0;
+    const dispatch = useDispatch();
     const onClickAdd = () => {
-        setGoodCount(goodCount + 1);
+        const item = {
+            id,
+            title,
+            price,
+            imageUrl,
+            sellerName,
+            option: activeOption.optionName || '',
+        };
+
+        dispatch(addItem(item));
     };
+
 
     return (
         <div className="good-block-wrapper">
@@ -18,19 +40,28 @@ export default function GoodBlock({ title, price, imageUrl, sellerName }) {
                     />
                 </div>
                 <h4 className="good-block__title">{title}</h4>
-                {/* <div className="good-block__selector">
-                <ul>
-                    {types.map(type => (
-                        <li
-                            className={activeType === type.id ? "active" : ""}
-                            onClick={() => setActiveType(type.id)}
-                            key={type.id}
-                        >
-                            {type.optionName}
-                        </li>
-                    ))}
-                </ul>
-            </div> */}
+                {
+                    <div className="good-block__selector">
+                        <ul>
+                            {goodOptions.length > 0 &&
+                                goodOptions.map((type) => (
+                                    <li
+                                        className={
+                                            activeOption.id === type.id
+                                                ? "active"
+                                                : ""
+                                        }
+                                        onClick={() => setActiveOption(type)}
+                                        key={type.id}
+                                    >
+                                        {type.optionName
+                                            ? type.optionName
+                                            : null}
+                                    </li>
+                                ))}
+                        </ul>
+                    </div>
+                }
                 <div className="good-block__bottom">
                     <div className="good-block__price">{price} $</div>
                     <button
@@ -50,7 +81,7 @@ export default function GoodBlock({ title, price, imageUrl, sellerName }) {
                             />
                         </svg>
                         <span>Add</span>
-                        <i>{goodCount}</i>
+                        {count > 0 && <i>{count}</i>}
                     </button>
                     <div className="seller">
                         <div> Seller:</div>
