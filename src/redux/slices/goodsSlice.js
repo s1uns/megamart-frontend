@@ -3,6 +3,8 @@ import axios from "axios";
 
 const initialState = {
     items: [],
+    totalPages: 0,
+    status: "processing", // processing | success | failed
 };
 
 export const fetchGoods = createAsyncThunk(
@@ -29,9 +31,24 @@ export const goodsSlice = createSlice({
         setItems(state, action) {
             state.items = action.payload;
         },
+        setTotalPages(state, action) {
+            state.totalPages = action.payload;
+        },
     },
     extraReducers: (builder) => {
+        builder.addCase(fetchGoods.pending, (state) => {
+            state.status = "processing";
+            state.items = [];
+        });
         builder.addCase(fetchGoods.fulfilled, (state, action) => {
+            state.status = "success";
+            state.totalPages = action.payload.totalPages;
+            state.items = action.payload.data;
+        });
+        builder.addCase(fetchGoods.rejected, (state) => {
+            state.status = "failed";
+            state.items = [];
+            state.totalPages = 1;
         });
     },
 });
