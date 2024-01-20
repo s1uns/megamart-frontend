@@ -13,6 +13,7 @@ import {
     setCurrentPage,
     setFilters,
 } from "../redux/slices/filterSlice";
+import { fetchGoods } from "../redux/slices/goodsSlice";
 import axios from "axios";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
@@ -22,10 +23,10 @@ const Home = () => {
     const { categoryId, sortType, sortOrder, currentPage } = useSelector(
         (state) => state.filter
     );
+    const goods = useSelector((state) => state.goods.items);
     const isFilter = useRef(false);
     const isMounted = useRef(false);
     const sortProperty = sortType.sortProperty;
-    const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [totalPages, setTotalPages] = useState(1);
     const { searchValue } = useContext(SearchContext);
@@ -39,7 +40,7 @@ const Home = () => {
         dispatch(setCurrentPage(page));
     };
 
-    const fetchGoods = async () => {
+    const getGoods = async () => {
         setIsLoading(true);
         // axios
         //     .get(
@@ -52,11 +53,16 @@ const Home = () => {
         //     });
 
         try {
-            const items = await axios.get(
-                `https:localhost:7295/api/goods/list?page=${currentPage}&limit=5&category=${categoryId}&sortBy=${sortProperty}&sortOrder=${sortOrder}&search=${searchValue}`
+            dispatch(
+                fetchGoods({
+                    currentPage,
+                    categoryId,
+                    sortProperty,
+                    sortOrder,
+                    searchValue
+                })
             );
-            setItems(items.data.data);
-            setTotalPages(items.data.totalPages);
+            // setTotalPages(goods.data.totalPages);
         } catch (error) {
             console.log(error);
         } finally {
@@ -88,7 +94,7 @@ const Home = () => {
                 initialState.selectedSort === params.selectedSort &&
                 initialState.currentPage === Number(params.currentPage)
             ) {
-                fetchGoods();
+                getGoods();
             }
             const sortType = sortList.find(
                 (sortType) => sortType.sortProperty === params.sortProperty
@@ -102,7 +108,7 @@ const Home = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
         if (!isFilter.current) {
-            fetchGoods();
+            getGoods();
         }
 
         isFilter.current = false;
@@ -123,7 +129,7 @@ const Home = () => {
                     ? [...new Array(12)].map((_, index) => (
                           <Skeleton key={index} />
                       ))
-                    : items.map((item) => (
+                    : goods.map((item) => (
                           <GoodBlock
                               key={item.id}
                               id={item.id}
