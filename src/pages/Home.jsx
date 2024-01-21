@@ -5,7 +5,6 @@ import GoodBlock from "../components/GoodBlock";
 import { useEffect, useRef } from "react";
 import Skeleton from "../components/GoodBlock/Skeleton";
 import Pagination from "../components/Pagination";
-import { SearchContext } from "../App";
 import { useDispatch, useSelector } from "react-redux";
 import {
     initialState,
@@ -19,14 +18,13 @@ import { useNavigate } from "react-router-dom";
 
 const Home = () => {
     const dispatch = useDispatch();
-    const { categoryId, sortType, sortOrder, currentPage } = useSelector(
+    const { categoryId, sortType, sortOrder, currentPage, searchValue } = useSelector(
         (state) => state.filter
     );
     const { items, totalPages, status } = useSelector((state) => state.goods);
     const isFilter = useRef(false);
     const isMounted = useRef(false);
     const sortProperty = sortType.sortProperty;
-    const { searchValue } = useContext(SearchContext);
     const navigate = useNavigate();
 
     const onChangeCategory = (categoryId) => {

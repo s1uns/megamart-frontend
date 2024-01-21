@@ -3,9 +3,11 @@ import logoSVG from "../assets/img/MegaMartLogo.svg";
 import { Link } from "react-router-dom";
 import { Search } from "./Search";
 import { useSelector, useDispatch } from "react-redux";
+import { selectCart } from "../redux/slices/cartSlice";
+
 
 export default function Header() {
-    const { totalPrice, items } = useSelector((state) => state.cart);
+    const { totalPrice, items } = useSelector(selectCart);
     const dispatch = useDispatch();
     return (
         <div className="header">
