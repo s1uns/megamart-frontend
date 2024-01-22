@@ -2,10 +2,9 @@ import React, { useContext } from "react";
 import Categories from "../components/Categories";
 import Sort, { sortList } from "../components/Sort";
 import GoodBlock from "../components/GoodBlock";
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import Skeleton from "../components/GoodBlock/Skeleton";
 import Pagination from "../components/Pagination";
-import { SearchContext } from "../App";
 import { useDispatch, useSelector } from "react-redux";
 import {
     initialState,
@@ -13,22 +12,19 @@ import {
     setCurrentPage,
     setFilters,
 } from "../redux/slices/filterSlice";
-import axios from "axios";
+import { fetchGoods } from "../redux/slices/goodsSlice";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
     const dispatch = useDispatch();
-    const { categoryId, sortType, sortOrder, currentPage } = useSelector(
+    const { categoryId, sortType, sortOrder, currentPage, searchValue } = useSelector(
         (state) => state.filter
     );
+    const { items, totalPages, status } = useSelector((state) => state.goods);
     const isFilter = useRef(false);
     const isMounted = useRef(false);
     const sortProperty = sortType.sortProperty;
-    const [items, setItems] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [totalPages, setTotalPages] = useState(1);
-    const { searchValue } = useContext(SearchContext);
     const navigate = useNavigate();
 
     const onChangeCategory = (categoryId) => {
@@ -39,17 +35,22 @@ const Home = () => {
         dispatch(setCurrentPage(page));
     };
 
-    const fetchGoods = () => {
-        setIsLoading(true);
-        axios
-            .get(
-                `https:localhost:7295/api/goods/list?page=${currentPage}&limit=5&category=${categoryId}&sortBy=${sortProperty}&sortOrder=${sortOrder}&search=${searchValue}`
-            )
-            .then((response) => {
-                setItems(response.data.data);
-                setTotalPages(response.data.totalPages);
-                setIsLoading(false);
-            });
+    const getGoods = async () => {
+        try {
+            dispatch(
+                fetchGoods({
+                    currentPage,
+                    categoryId,
+                    sortProperty,
+                    sortOrder,
+                    searchValue,
+                })
+            );
+            // setTotalPages(items.data.totalPages);
+        } catch (error) {
+            console.log(error);
+        } finally {
+        }
     };
 
     //If params were changed and the first render occured
@@ -76,7 +77,7 @@ const Home = () => {
                 initialState.selectedSort === params.selectedSort &&
                 initialState.currentPage === Number(params.currentPage)
             ) {
-                fetchGoods();
+                getGoods();
             }
             const sortType = sortList.find(
                 (sortType) => sortType.sortProperty === params.sortProperty
@@ -86,11 +87,11 @@ const Home = () => {
         }
     }, []);
 
-    //If the first render occured, fetch the goods
+    //If the first render occured, fetch the items
     useEffect(() => {
         window.scrollTo(0, 0);
         if (!isFilter.current) {
-            fetchGoods();
+            getGoods();
         }
 
         isFilter.current = false;
@@ -105,26 +106,36 @@ const Home = () => {
                 />
                 <Sort />
             </div>
-            <h2 className="content__title">All goods</h2>
-            <div className="content__items">
-                {isLoading
-                    ? [...new Array(12)].map((_, index) => (
-                          <Skeleton key={index} />
-                      ))
-                    : items.map((item) => (
-                          <GoodBlock
-                              key={item.id}
-                              id={item.id}
-                              title={item.name}
-                              price={item.price}
-                              imageUrl={item.imgUrl}
-                              sellerName={item.sellerName}
-                              goodOptions={
-                                  item.goodOptions ? item.goodOptions : []
-                              }
-                          />
-                      ))}
-            </div>
+            <h2 className="content__title">All items</h2>
+            {status === "failed" ? (
+                <div className="content__error-info">
+                    <h2>
+                        Failed to get the goods <span>😕</span>
+                    </h2>
+                    <p>Try again later.</p>
+                </div>
+            ) : (
+                <div className="content__items">
+                    {status === "processing"
+                        ? [...new Array(12)].map((_, index) => (
+                              <Skeleton key={index} />
+                          ))
+                        : items.map((item) => (
+                              <GoodBlock
+                                  key={item.id}
+                                  id={item.id}
+                                  title={item.name}
+                                  price={item.price}
+                                  imageUrl={item.imgUrl}
+                                  sellerName={item.sellerName}
+                                  goodOptions={
+                                      item.goodOptions ? item.goodOptions : []
+                                  }
+                              />
+                          ))}
+                </div>
+            )}
+
             <Pagination
                 currentPage={currentPage}
                 onChangePage={onChangePage}

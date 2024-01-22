@@ -4,9 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 import CartItem from "../components/CartItem";
 import { cleanCart } from "../redux/slices/cartSlice";
 import CartEmpty from "../components/CartEmpty";
+import { selectCart } from "../redux/slices/cartSlice";
 
 const Cart = () => {
-    const cart = useSelector((state) => state.cart);
+    const cart = useSelector(selectCart);
     const dispatch = useDispatch();
     const onCleanCart = () => {
         dispatch(cleanCart());
