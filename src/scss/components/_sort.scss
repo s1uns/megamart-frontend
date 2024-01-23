@@ -15,8 +15,8 @@
         }
 
         span {
-            color: $orange;
-            border-bottom: 1px dashed $orange;
+            color: $gray;
+            border-bottom: 1px dashed $gray;
             cursor: pointer;
         }
     }
@@ -37,15 +37,15 @@
             li {
                 padding: 12px 20px;
                 cursor: pointer;
-
+                
                 &.active,
                 &:hover {
-                    background: rgba(254, 95, 30, 0.05);
+                    background: rgba(74, 66, 63, 0.05);
                 }
 
                 &.active {
                     font-weight: bold;
-                    color: $orange;
+                    color: $gray;
                 }
             }
         }
