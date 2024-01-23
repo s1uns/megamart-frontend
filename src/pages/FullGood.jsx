@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import NotFound from "./NotFound";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../redux/slices/cartSlice";
+import GoodSkeleton from "./GoodSkeleton";
 
 const FullGood = () => {
     const { id } = useParams();
@@ -37,7 +38,6 @@ const FullGood = () => {
                     `https:localhost:7295/api/goods/${id}`
                 );
                 setGoodInfo(data);
-                console.log(data.goodOptions);
                 setActiveOption(
                     data.goodOptions.length > 0 ? data.goodOptions[0] : {}
                 );
@@ -50,7 +50,7 @@ const FullGood = () => {
     }, [id]);
 
     if (!goodInfo) {
-        return "Loading...";
+        return <GoodSkeleton />;
     }
 
     return Object.keys(goodInfo).length > 0 ? (
