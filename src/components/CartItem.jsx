@@ -16,14 +16,13 @@ export default function CartItem({
     };
 
     const onMinusItem = () => {
-        dispatch(minusItem({id, option}));
+        dispatch(minusItem({ id, option }));
     };
 
     const onRemoveItem = () => {
-        dispatch(removeItem({id, option}));
-    }
+        dispatch(removeItem({ id, option }));
+    };
 
-    console.log(id);
     return (
         <div className="cart__item">
             <div className="cart__item-img">

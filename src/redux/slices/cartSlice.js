@@ -35,6 +35,9 @@ export const cartSlice = createSlice({
                     item.id === action.payload.id &&
                     item.option === action.payload.option
             );
+            console.log("less than 0");
+            console.log({ ...findItem });
+            console.log(action.payload);
             state.totalPrice =
                 Math.round((state.totalPrice - findItem.price) * 100) / 100;
             if (findItem.count !== 1) {
@@ -74,7 +77,7 @@ export const cartSlice = createSlice({
     },
 });
 
-export const selectCart = state => state.cart;
+export const selectCart = (state) => state.cart;
 
 export const { addItem, removeItem, cleanCart, minusItem } = cartSlice.actions;
 

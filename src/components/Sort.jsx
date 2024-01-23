@@ -28,12 +28,12 @@ export default function Sort() {
         const handleClickOutside = (event) => {
             if (!event.path.includes(sortRef.current)) {
                 setIsVisible(false);
-                console.log("Outside");
             }
         };
         document.body.addEventListener("click", handleClickOutside);
 
-        return () => document.body.removeEventListener("click", handleClickOutside);
+        return () =>
+            document.body.removeEventListener("click", handleClickOutside);
     }, []);
 
     return (
