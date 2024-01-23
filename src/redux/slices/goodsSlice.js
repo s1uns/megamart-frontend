@@ -18,7 +18,7 @@ export const fetchGoods = createAsyncThunk(
             searchValue,
         } = params;
         const { data } = await axios.get(
-            `https:localhost:7295/api/goods/list?page=${currentPage}&limit=5&category=${categoryId}&sortBy=${sortProperty}&sortOrder=${sortOrder}&search=${searchValue}`
+            `https:localhost:7295/api/goods?page=${currentPage}&limit=5&category=${categoryId}&sortBy=${sortProperty}&sortOrder=${sortOrder}&search=${searchValue}`
         );
         return data;
     }
