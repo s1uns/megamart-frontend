@@ -2,7 +2,14 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../../redux/slices/cartSlice";
 
-export default function GoodBlock({ id, title, price, imageUrl, sellerName }) {
+export default function GoodBlock({
+    id,
+    title,
+    description,
+    price,
+    imageUrl,
+    sellerName,
+}) {
     return (
         <div className="good-block-wrapper">
             <div className="good-block">
@@ -12,6 +19,13 @@ export default function GoodBlock({ id, title, price, imageUrl, sellerName }) {
                         src={imageUrl}
                         alt="Good"
                     />
+                    <div className="overlay">
+                        <div className="text">
+                            {description.length < 100
+                                ? description
+                                : description.substring(0, 97) + "..."}
+                        </div>
+                    </div>
                 </div>
                 <h4 className="good-block__title">{title}</h4>
                 <div className="good-block__bottom">

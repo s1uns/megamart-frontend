@@ -124,6 +124,7 @@ const Home = () => {
                                   <GoodBlock
                                       id={item.id}
                                       title={item.name}
+                                      description={item.description}
                                       price={item.price}
                                       imageUrl={item.imgUrl}
                                       sellerName={item.sellerName}
