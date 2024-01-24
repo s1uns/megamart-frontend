@@ -37,22 +37,25 @@
             height: 110%;
             background-color: #1e1925;
             opacity: 0.7;
-            transition: transform 0.8s;
             z-index: -1;
             transform: translateY(-100%);
-        }
+            transition: opacity 3s;
 
-        &:hover::before {
-            transform: translateY(0);
-            z-index: 2;
         }
 
         &:hover {
             background-color: #fff;
-        }
 
-        &:hover .overlay {
-            opacity: 1;
+            &::before {
+                transition: transform 0.8s;
+                z-index: 2;
+                transform: translateY(0);
+            }
+            .overlay {
+                z-index: 1000;
+                opacity: 1;
+                transition: opacity 0.8s;
+            }
         }
 
         .overlay {
@@ -77,7 +80,6 @@
             -ms-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
             text-align: center;
-            z-index: 100;
         }
     }
 
@@ -133,8 +135,8 @@
         width: 650px;
 
         img {
-            border: 5px solid $gray;
-
+            outline: 5px solid $gray;
+            box-sizing: border-box;
             height: 650px;
             width: 650px;
             object-fit: cover;
