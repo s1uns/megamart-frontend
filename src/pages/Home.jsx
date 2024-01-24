@@ -14,13 +14,12 @@ import {
 } from "../redux/slices/filterSlice";
 import { fetchGoods } from "../redux/slices/goodsSlice";
 import qs from "qs";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Home = () => {
     const dispatch = useDispatch();
-    const { categoryId, sortType, sortOrder, currentPage, searchValue } = useSelector(
-        (state) => state.filter
-    );
+    const { categoryId, sortType, sortOrder, currentPage, searchValue } =
+        useSelector((state) => state.filter);
     const { items, totalPages, status } = useSelector((state) => state.goods);
     const isFilter = useRef(false);
     const isMounted = useRef(false);
@@ -121,17 +120,21 @@ const Home = () => {
                               <Skeleton key={index} />
                           ))
                         : items.map((item) => (
-                              <GoodBlock
-                                  key={item.id}
-                                  id={item.id}
-                                  title={item.name}
-                                  price={item.price}
-                                  imageUrl={item.imgUrl}
-                                  sellerName={item.sellerName}
-                                  goodOptions={
-                                      item.goodOptions ? item.goodOptions : []
-                                  }
-                              />
+                              <Link key={item.id} to={`/goods/${item.id}`}>
+                                  <GoodBlock
+                                      id={item.id}
+                                      title={item.name}
+                                      description={item.description}
+                                      price={item.price}
+                                      imageUrl={item.imgUrl}
+                                      sellerName={item.sellerName}
+                                      goodOptions={
+                                          item.goodOptions
+                                              ? item.goodOptions
+                                              : []
+                                      }
+                                  />
+                              </Link>
                           ))}
                 </div>
             )}

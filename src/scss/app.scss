@@ -29,12 +29,12 @@ body {
         width: 500px;
         text-align: center;
 
-        h2{
+        h2 {
             font-size: 32px;
             font-weight: 700;
         }
 
-        p{
+        p {
             font-size: 20px;
             margin-top: 15px;
         }
@@ -302,7 +302,7 @@ body {
 
                 &:last-of-type {
                     b {
-                        color: $orange;
+                        color: $gray;
                     }
                 }
             }
