@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { FC, useCallback, useContext } from "react";
 import Categories from "../components/Categories";
 import Sort, { sortList } from "../components/Sort";
 import GoodBlock from "../components/GoodBlock";
@@ -12,25 +12,28 @@ import {
     setCurrentPage,
     setFilters,
 } from "../redux/slices/filterSlice";
-import { fetchGoods } from "../redux/slices/goodsSlice";
+import { Filters, fetchGoods } from "../redux/slices/goodsSlice";
 import qs from "qs";
 import { Link, useNavigate } from "react-router-dom";
+import { RootState, useAppDispatch } from "../redux/store";
 
-const Home = () => {
-    const dispatch = useDispatch();
+const Home: FC = () => {
+    const dispatch = useAppDispatch();
     const { categoryId, sortType, sortOrder, currentPage, searchValue } =
-        useSelector((state) => state.filter);
-    const { items, totalPages, status } = useSelector((state) => state.goods);
+        useSelector((state: RootState) => state.filter);
+    const { items, totalPages, status } = useSelector(
+        (state: RootState) => state.goods
+    );
     const isFilter = useRef(false);
     const isMounted = useRef(false);
     const sortProperty = sortType.sortProperty;
     const navigate = useNavigate();
 
-    const onChangeCategory = (categoryId) => {
+    const onChangeCategory = useCallback((categoryId: string) => {
         dispatch(setCategoryId(categoryId));
-    };
+    }, []);
 
-    const onChangePage = (page) => {
+    const onChangePage = (page: number) => {
         dispatch(setCurrentPage(page));
     };
 
@@ -70,18 +73,23 @@ const Home = () => {
     //If the first render occured, then check the URL and set filters to redux storage
     useEffect(() => {
         if (window.location.search) {
-            const params = qs.parse(window.location.search.substring(1));
+            const params = qs.parse(
+                window.location.search.substring(1)
+            ) as unknown as Filters;
+            const sortType = sortList.find(
+                (sortType) => sortType.sortProperty === params.sortProperty
+            );
             if (
                 initialState.categoryId === params.categoryId &&
-                initialState.selectedSort === params.selectedSort &&
+                initialState.sortType === sortType &&
                 initialState.currentPage === Number(params.currentPage)
             ) {
                 getGoods();
             }
-            const sortType = sortList.find(
-                (sortType) => sortType.sortProperty === params.sortProperty
+
+            dispatch(
+                setFilters({ ...params, sortType: sortType || sortList[0] })
             );
-            dispatch(setFilters({ ...params, sortType }));
             isFilter.current = true;
         }
     }, []);
@@ -101,9 +109,9 @@ const Home = () => {
             <div className="content__top">
                 <Categories
                     value={categoryId}
-                    onClickCategory={(id) => onChangeCategory(id)}
+                    onClickCategory={onChangeCategory}
                 />
-                <Sort />
+                <Sort sortType={sortType} sortOrder={sortOrder} />
             </div>
             <h2 className="content__title">All items</h2>
             {status === "failed" ? (
@@ -119,7 +127,7 @@ const Home = () => {
                         ? [...new Array(12)].map((_, index) => (
                               <Skeleton key={index} />
                           ))
-                        : items.map((item) => (
+                        : items.map((item: any) => (
                               <Link key={item.id} to={`/goods/${item.id}`}>
                                   <GoodBlock
                                       id={item.id}
@@ -128,11 +136,6 @@ const Home = () => {
                                       price={item.price}
                                       imageUrl={item.imgUrl}
                                       sellerName={item.sellerName}
-                                      goodOptions={
-                                          item.goodOptions
-                                              ? item.goodOptions
-                                              : []
-                                      }
                                   />
                               </Link>
                           ))}

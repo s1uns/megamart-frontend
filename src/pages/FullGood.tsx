@@ -1,34 +1,56 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import NotFound from "./NotFound";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem } from "../redux/slices/cartSlice";
+import { CartItemObject, addItem } from "../redux/slices/cartSlice";
 import GoodSkeleton from "./GoodSkeleton";
+import { RootState } from "../redux/store";
 
-const FullGood = () => {
+type GoodFullInfo = {
+    id: string;
+    name: string;
+    description: string;
+    price: number;
+    imgUrl: string;
+    sellerName: string;
+    goodOptions: {
+        id: string;
+        optionName: string;
+    }[];
+};
+
+const FullGood: FC = () => {
     const { id } = useParams();
-    const [goodInfo, setGoodInfo] = useState();
-    const [activeOption, setActiveOption] = useState();
+    const [goodInfo, setGoodInfo] = useState<GoodFullInfo>();
+    const [activeOption, setActiveOption] = useState<{
+        id: string;
+        optionName: string;
+    }>();
     const count =
-        useSelector((state) =>
+        useSelector((state: RootState) =>
             state.cart.items
                 .filter((item) => item.id === id)
-                .reduce((count, item) => count + item.count, 0)
+                .reduce((count: number, item) => count + item.count, 0)
         ) || 0;
 
     const dispatch = useDispatch();
     const onClickAdd = () => {
-        const item = {
-            id: goodInfo.id,
-            title: goodInfo.name,
-            price: goodInfo.price,
-            imageUrl: goodInfo.imgUrl,
-            sellerName: goodInfo.sellerName,
-            option: activeOption.optionName || "",
-        };
+        if (goodInfo && activeOption) {
+            const item: CartItemObject = {
+                id: goodInfo.id,
+                title: goodInfo.name,
+                price: goodInfo.price,
+                imageUrl: goodInfo.imgUrl,
+                option: {
+                    id: activeOption.id,
+                    optionName: activeOption.optionName || "",
+                },
+                count: 0
+            };
 
-        dispatch(addItem(item));
+            dispatch(addItem(item));
+        }
     };
 
     useEffect(() => {
@@ -42,7 +64,7 @@ const FullGood = () => {
                     data.goodOptions.length > 0 ? data.goodOptions[0] : {}
                 );
             } catch (error) {
-                setGoodInfo({});
+                setGoodInfo(undefined);
             }
         }
 
@@ -79,7 +101,7 @@ const FullGood = () => {
                         {goodInfo.goodOptions.map((type) => (
                             <li
                                 className={
-                                    activeOption.id === type.id ? "active" : ""
+                                    activeOption?.id === type.id ? "active" : ""
                                 }
                                 onClick={() => setActiveOption(type)}
                                 key={type.id}
