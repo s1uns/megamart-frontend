@@ -3,47 +3,50 @@ import React, { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import NotFound from "./NotFound";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem } from "../redux/slices/cartSlice";
+import { CartItemObject, addItem } from "../redux/slices/cartSlice";
 import GoodSkeleton from "./GoodSkeleton";
+import { RootState } from "../redux/store";
+
+type GoodFullInfo = {
+    id: string;
+    name: string;
+    description: string;
+    price: number;
+    imgUrl: string;
+    sellerName: string;
+    goodOptions: {
+        id: string;
+        optionName: string;
+    }[];
+};
 
 const FullGood: FC = () => {
     const { id } = useParams();
-    const [goodInfo, setGoodInfo] = useState<{
-        id: string;
-        name: string;
-        description: string;
-        price: number;
-        imgUrl: string;
-        sellerName: string;
-        goodOptions: {
-            id: string;
-            optionName: string;
-        }[];
-    }>();
+    const [goodInfo, setGoodInfo] = useState<GoodFullInfo>();
     const [activeOption, setActiveOption] = useState<{
         id: string;
         optionName: string;
     }>();
     const count =
-        useSelector((state: any) =>
+        useSelector((state: RootState) =>
             state.cart.items
-                .filter((item: any) => item.id === id)
-                .reduce((count: number, item: any) => count + item.count, 0)
+                .filter((item) => item.id === id)
+                .reduce((count: number, item) => count + item.count, 0)
         ) || 0;
 
     const dispatch = useDispatch();
     const onClickAdd = () => {
         if (goodInfo && activeOption) {
-            const item = {
+            const item: CartItemObject = {
                 id: goodInfo.id,
                 title: goodInfo.name,
                 price: goodInfo.price,
                 imageUrl: goodInfo.imgUrl,
-                sellerName: goodInfo.sellerName,
                 option: {
                     id: activeOption.id,
                     optionName: activeOption.optionName || "",
                 },
+                count: 0
             };
 
             dispatch(addItem(item));

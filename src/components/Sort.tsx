@@ -1,28 +1,32 @@
-import React, { useRef, useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setSortType, setSortOrder } from "../redux/slices/filterSlice";
+import { useRef, useState, useEffect, FC, memo } from "react";
+import { useDispatch } from "react-redux";
+import {
+    setSortType,
+    setSortOrder,
+    SortType,
+} from "../redux/slices/filterSlice";
 
-type SortItem = {
-    name: string;
-    sortProperty: string;
-};
 type ClickOutside = MouseEvent & {
     path: Node[];
 };
 
-export const sortList: SortItem[] = [
+type SortProps = {
+    sortType: SortType;
+    sortOrder: boolean;
+};
+
+export const sortList: SortType[] = [
     { name: "popularity", sortProperty: "rating" },
     { name: "price", sortProperty: "price" },
     { name: "alphabet", sortProperty: "title" },
 ];
 
-export default function Sort() {
+const Sort: FC<SortProps> = memo(({ sortType, sortOrder }) => {
     const dispatch = useDispatch();
-    const { sortType, sortOrder } = useSelector((state: any) => state.filter);
     const [isVisible, setIsVisible] = useState(false);
     const sortRef = useRef<HTMLDivElement>(null);
 
-    const selectItem = (element: SortItem) => {
+    const selectItem = (element: SortType) => {
         if (element.sortProperty == sortType.sortProperty) {
             dispatch(setSortOrder(!sortOrder));
         } else {
@@ -91,4 +95,6 @@ export default function Sort() {
             )}
         </div>
     );
-}
+});
+
+export default Sort;

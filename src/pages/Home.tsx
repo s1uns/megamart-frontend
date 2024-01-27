@@ -1,4 +1,4 @@
-import React, { FC, useContext } from "react";
+import React, { FC, useCallback, useContext } from "react";
 import Categories from "../components/Categories";
 import Sort, { sortList } from "../components/Sort";
 import GoodBlock from "../components/GoodBlock";
@@ -12,25 +12,26 @@ import {
     setCurrentPage,
     setFilters,
 } from "../redux/slices/filterSlice";
-import { fetchGoods } from "../redux/slices/goodsSlice";
+import { Filters, fetchGoods } from "../redux/slices/goodsSlice";
 import qs from "qs";
 import { Link, useNavigate } from "react-router-dom";
+import { RootState, useAppDispatch } from "../redux/store";
 
 const Home: FC = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const { categoryId, sortType, sortOrder, currentPage, searchValue } =
-        useSelector((state: any) => state.filter);
+        useSelector((state: RootState) => state.filter);
     const { items, totalPages, status } = useSelector(
-        (state: any) => state.goods
+        (state: RootState) => state.goods
     );
     const isFilter = useRef(false);
     const isMounted = useRef(false);
     const sortProperty = sortType.sortProperty;
     const navigate = useNavigate();
 
-    const onChangeCategory = (categoryId: string) => {
+    const onChangeCategory = useCallback((categoryId: string) => {
         dispatch(setCategoryId(categoryId));
-    };
+    }, []);
 
     const onChangePage = (page: number) => {
         dispatch(setCurrentPage(page));
@@ -39,8 +40,6 @@ const Home: FC = () => {
     const getGoods = async () => {
         try {
             dispatch(
-                //@ts-ignore
-
                 fetchGoods({
                     currentPage,
                     categoryId,
@@ -74,18 +73,23 @@ const Home: FC = () => {
     //If the first render occured, then check the URL and set filters to redux storage
     useEffect(() => {
         if (window.location.search) {
-            const params = qs.parse(window.location.search.substring(1));
+            const params = qs.parse(
+                window.location.search.substring(1)
+            ) as unknown as Filters;
+            const sortType = sortList.find(
+                (sortType) => sortType.sortProperty === params.sortProperty
+            );
             if (
                 initialState.categoryId === params.categoryId &&
-                initialState.sortType === params.selectedSort &&
+                initialState.sortType === sortType &&
                 initialState.currentPage === Number(params.currentPage)
             ) {
                 getGoods();
             }
-            const sortType = sortList.find(
-                (sortType) => sortType.sortProperty === params.sortProperty
+
+            dispatch(
+                setFilters({ ...params, sortType: sortType || sortList[0] })
             );
-            dispatch(setFilters({ ...params, sortType }));
             isFilter.current = true;
         }
     }, []);
@@ -107,7 +111,7 @@ const Home: FC = () => {
                     value={categoryId}
                     onClickCategory={onChangeCategory}
                 />
-                <Sort />
+                <Sort sortType={sortType} sortOrder={sortOrder} />
             </div>
             <h2 className="content__title">All items</h2>
             {status === "failed" ? (

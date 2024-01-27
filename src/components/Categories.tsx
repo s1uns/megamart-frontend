@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FC } from "react";
+import React, { useState, useEffect, FC, memo } from "react";
 
 type CategoriesProps = {
     value: string;
@@ -12,7 +12,7 @@ type Category = {
     fontColor: string;
 };
 
-const Categories: FC<CategoriesProps> = ({ value, onClickCategory }) => {
+const Categories: FC<CategoriesProps> = memo(({ value, onClickCategory }) => {
     const [categories, setCategories] = useState<Category[]>([]);
 
     useEffect(() => {
@@ -55,6 +55,6 @@ const Categories: FC<CategoriesProps> = ({ value, onClickCategory }) => {
             </ul>
         </div>
     );
-};
+});
 
 export default Categories;
