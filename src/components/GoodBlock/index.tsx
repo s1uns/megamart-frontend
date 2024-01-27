@@ -1,15 +1,24 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../../redux/slices/cartSlice";
 
-export default function GoodBlock({
+type GoodBlockProps = {
+    id: string;
+    title: string;
+    description: string;
+    price: number;
+    imageUrl: string;
+    sellerName: string;
+};
+
+const GoodBlock: FC<GoodBlockProps> = ({
     id,
     title,
     description,
     price,
     imageUrl,
     sellerName,
-}) {
+}) => {
     return (
         <div className="good-block-wrapper">
             <div className="good-block">
@@ -38,4 +47,6 @@ export default function GoodBlock({
             </div>
         </div>
     );
-}
+};
+
+export default GoodBlock;

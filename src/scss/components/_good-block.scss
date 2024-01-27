@@ -11,6 +11,23 @@
         justify-content: center;
     }
 
+    &:hover {
+        .good-block__img-container {
+            background-color: #fff;
+
+            &::before {
+                transition: transform 0.8s;
+                z-index: 2;
+                transform: translateY(0);
+            }
+
+            .overlay {
+                z-index: 1000;
+                opacity: 1;
+                transition: opacity 0.8s;
+            }
+        }
+    }
     &__img-container {
         width: 280px;
         height: 280px;
@@ -40,22 +57,6 @@
             z-index: -1;
             transform: translateY(-100%);
             transition: opacity 3s;
-
-        }
-
-        &:hover {
-            background-color: #fff;
-
-            &::before {
-                transition: transform 0.8s;
-                z-index: 2;
-                transform: translateY(0);
-            }
-            .overlay {
-                z-index: 1000;
-                opacity: 1;
-                transition: opacity 0.8s;
-            }
         }
 
         .overlay {

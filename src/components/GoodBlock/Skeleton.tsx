@@ -1,7 +1,7 @@
-import React from "react";
+import React, { FC } from "react";
 import ContentLoader from "react-content-loader";
 
-const Skeleton = () => (
+const Skeleton: FC = () => (
     <ContentLoader
         className="good-block"
         speed={2}

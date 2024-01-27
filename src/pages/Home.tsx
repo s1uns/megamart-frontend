@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { FC, useContext } from "react";
 import Categories from "../components/Categories";
 import Sort, { sortList } from "../components/Sort";
 import GoodBlock from "../components/GoodBlock";
@@ -16,27 +16,31 @@ import { fetchGoods } from "../redux/slices/goodsSlice";
 import qs from "qs";
 import { Link, useNavigate } from "react-router-dom";
 
-const Home = () => {
+const Home: FC = () => {
     const dispatch = useDispatch();
     const { categoryId, sortType, sortOrder, currentPage, searchValue } =
-        useSelector((state) => state.filter);
-    const { items, totalPages, status } = useSelector((state) => state.goods);
+        useSelector((state: any) => state.filter);
+    const { items, totalPages, status } = useSelector(
+        (state: any) => state.goods
+    );
     const isFilter = useRef(false);
     const isMounted = useRef(false);
     const sortProperty = sortType.sortProperty;
     const navigate = useNavigate();
 
-    const onChangeCategory = (categoryId) => {
+    const onChangeCategory = (categoryId: string) => {
         dispatch(setCategoryId(categoryId));
     };
 
-    const onChangePage = (page) => {
+    const onChangePage = (page: number) => {
         dispatch(setCurrentPage(page));
     };
 
     const getGoods = async () => {
         try {
             dispatch(
+                //@ts-ignore
+
                 fetchGoods({
                     currentPage,
                     categoryId,
@@ -73,7 +77,7 @@ const Home = () => {
             const params = qs.parse(window.location.search.substring(1));
             if (
                 initialState.categoryId === params.categoryId &&
-                initialState.selectedSort === params.selectedSort &&
+                initialState.sortType === params.selectedSort &&
                 initialState.currentPage === Number(params.currentPage)
             ) {
                 getGoods();
@@ -101,7 +105,7 @@ const Home = () => {
             <div className="content__top">
                 <Categories
                     value={categoryId}
-                    onClickCategory={(id) => onChangeCategory(id)}
+                    onClickCategory={onChangeCategory}
                 />
                 <Sort />
             </div>
@@ -119,7 +123,7 @@ const Home = () => {
                         ? [...new Array(12)].map((_, index) => (
                               <Skeleton key={index} />
                           ))
-                        : items.map((item) => (
+                        : items.map((item: any) => (
                               <Link key={item.id} to={`/goods/${item.id}`}>
                                   <GoodBlock
                                       id={item.id}
@@ -128,11 +132,6 @@ const Home = () => {
                                       price={item.price}
                                       imageUrl={item.imgUrl}
                                       sellerName={item.sellerName}
-                                      goodOptions={
-                                          item.goodOptions
-                                              ? item.goodOptions
-                                              : []
-                                      }
                                   />
                               </Link>
                           ))}

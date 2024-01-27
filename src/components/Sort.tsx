@@ -2,7 +2,15 @@ import React, { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setSortType, setSortOrder } from "../redux/slices/filterSlice";
 
-export const sortList = [
+type SortItem = {
+    name: string;
+    sortProperty: string;
+};
+type ClickOutside = MouseEvent & {
+    path: Node[];
+};
+
+export const sortList: SortItem[] = [
     { name: "popularity", sortProperty: "rating" },
     { name: "price", sortProperty: "price" },
     { name: "alphabet", sortProperty: "title" },
@@ -10,12 +18,11 @@ export const sortList = [
 
 export default function Sort() {
     const dispatch = useDispatch();
-    const { sortType, sortOrder } = useSelector((state) => state.filter);
+    const { sortType, sortOrder } = useSelector((state: any) => state.filter);
     const [isVisible, setIsVisible] = useState(false);
-    const sortRef = useRef();
+    const sortRef = useRef<HTMLDivElement>(null);
 
-    const selectItem = (element) => {
-        console.log(element.sortProperty, sortType.sortProperty);
+    const selectItem = (element: SortItem) => {
         if (element.sortProperty == sortType.sortProperty) {
             dispatch(setSortOrder(!sortOrder));
         } else {
@@ -25,8 +32,9 @@ export default function Sort() {
     };
 
     useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (!event.path.includes(sortRef.current)) {
+        const handleClickOutside = (event: MouseEvent) => {
+            const _event = event as ClickOutside;
+            if (sortRef.current && !_event.path.includes(sortRef.current)) {
                 setIsVisible(false);
             }
         };

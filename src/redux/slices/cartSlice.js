@@ -13,7 +13,7 @@ export const cartSlice = createSlice({
             const findItem = state.items.find(
                 (item) =>
                     item.id === action.payload.id &&
-                    item.option === action.payload.option
+                    item.option.id === action.payload.option.id
             );
             if (findItem) {
                 findItem.count++;
@@ -33,11 +33,9 @@ export const cartSlice = createSlice({
             const findItem = state.items.find(
                 (item) =>
                     item.id === action.payload.id &&
-                    item.option === action.payload.option
+                    item.option.id === action.payload.option.id
             );
-            console.log("less than 0");
-            console.log({ ...findItem });
-            console.log(action.payload);
+
             state.totalPrice =
                 Math.round((state.totalPrice - findItem.price) * 100) / 100;
             if (findItem.count !== 1) {
@@ -47,8 +45,8 @@ export const cartSlice = createSlice({
                     (item) =>
                         !(
                             item.id === action.payload.id &&
-                            item.option === action.payload.option
-                        )
+                            item.option.id === action.payload.option.id
+                            )
                 );
             }
         },
@@ -56,7 +54,7 @@ export const cartSlice = createSlice({
             const findItem = state.items.find(
                 (item) =>
                     item.id === action.payload.id &&
-                    item.option === action.payload.option
+                    item.option.id === action.payload.option.id
             );
             state.totalPrice =
                 Math.round(
@@ -66,8 +64,8 @@ export const cartSlice = createSlice({
                 (item) =>
                     !(
                         item.id === action.payload.id &&
-                        item.option === action.payload.option
-                    )
+                        item.option.id === action.payload.option.id
+                        )
             );
         },
         cleanCart(state) {

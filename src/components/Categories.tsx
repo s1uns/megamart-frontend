@@ -1,7 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FC } from "react";
 
-export default function Categories({ value, onClickCategory }) {
-    const [categories, setCategories] = useState([]);
+type CategoriesProps = {
+    value: string;
+    onClickCategory: (categoryId: string) => void;
+};
+
+type Category = {
+    id: string;
+    name: string;
+    backgroundColor: string;
+    fontColor: string;
+};
+
+const Categories: FC<CategoriesProps> = ({ value, onClickCategory }) => {
+    const [categories, setCategories] = useState<Category[]>([]);
 
     useEffect(() => {
         fetch("https://localhost:7295/api/categories/list")
@@ -16,8 +28,8 @@ export default function Categories({ value, onClickCategory }) {
             <ul>
                 <li
                     style={{ backgroundColor: "#9b59b6" }}
-                    onClick={() => onClickCategory('')}
-                    className={value === '' ? "active" : ""}
+                    onClick={() => onClickCategory("")}
+                    className={value === "" ? "active" : ""}
                 >
                     All
                 </li>
@@ -43,4 +55,6 @@ export default function Categories({ value, onClickCategory }) {
             </ul>
         </div>
     );
-}
+};
+
+export default Categories;

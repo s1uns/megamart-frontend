@@ -57,7 +57,7 @@ export default function Header() {
                             </svg>
                             <span>
                                 {items.reduce(
-                                    (count, item) => count + item.count,
+                                    (count: number, item: any) => count + item.count,
                                     0
                                 )}
                             </span>
