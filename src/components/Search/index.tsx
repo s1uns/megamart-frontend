@@ -11,7 +11,7 @@ import debounce from "lodash.debounce";
 import { useDispatch } from "react-redux";
 import { setSearchValue } from "../../redux/slices/filterSlice";
 
-const Search: FC = () => {
+export const Search: FC = () => {
     const [value, setValue] = useState("");
     const inputRef = useRef<HTMLInputElement>(null);
     const dispatch = useDispatch();
@@ -116,4 +116,3 @@ const Search: FC = () => {
     );
 };
 
-export default Search;

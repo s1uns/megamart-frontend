@@ -1,5 +1,5 @@
-import React, { FC, useCallback, useContext } from "react";
-import Categories from "../components/Categories";
+import { FC, useCallback } from "react";
+import { Categories } from "../components/Categories";
 import { sortList } from "../components/Sort";
 import { useEffect, useRef } from "react";
 

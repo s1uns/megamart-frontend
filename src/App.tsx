@@ -1,10 +1,10 @@
 import "./scss/app.scss";
 import { lazy, Suspense } from "react";
-import Header from "./components/Header";
+import { Header } from "./components";
 import Home from "./pages/Home";
 import { Route, Routes } from "react-router-dom";
 import GoodSkeleton from "./pages/GoodSkeleton";
-import CartEmpty from "./components/CartEmpty";
+import { CartEmpty } from "./components";
 
 const Cart = lazy(() => import(/* webpackChunkName: "Cart" */ "./pages/Cart"));
 const FullGood = lazy(

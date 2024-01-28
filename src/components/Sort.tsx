@@ -21,7 +21,7 @@ export const sortList: SortType[] = [
     { name: "alphabet", sortProperty: "title" },
 ];
 
-const Sort: FC<SortProps> = memo(({ sortType, sortOrder }) => {
+export const Sort: FC<SortProps> = memo(({ sortType, sortOrder }) => {
     const dispatch = useDispatch();
     const [isVisible, setIsVisible] = useState(false);
     const sortRef = useRef<HTMLDivElement>(null);
@@ -97,4 +97,3 @@ const Sort: FC<SortProps> = memo(({ sortType, sortOrder }) => {
     );
 });
 
-export default Sort;

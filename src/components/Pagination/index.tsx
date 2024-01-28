@@ -8,7 +8,7 @@ type PaginationProps = {
     totalPages: number;
 };
 
-const Pagination: FC<PaginationProps> = ({
+export const Pagination: FC<PaginationProps> = ({
     currentPage,
     onChangePage,
     totalPages,
@@ -28,4 +28,3 @@ const Pagination: FC<PaginationProps> = ({
     );
 };
 
-export default Pagination;
