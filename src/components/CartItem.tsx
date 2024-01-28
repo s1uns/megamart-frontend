@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { useDispatch } from "react-redux";
 import {
     CartItemObject,
@@ -6,7 +6,6 @@ import {
     minusItem,
     removeItem,
 } from "../redux/slices/cartSlice";
-import clsx from "clsx";
 
 type CartItemProps = {
     id: string;
