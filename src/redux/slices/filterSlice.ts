@@ -5,7 +5,7 @@ export type SortType = {
     sortProperty: "rating" | "price" | "title";
 };
 
-interface FilterSliceState {
+interface IFilterSliceState {
     searchValue: string;
     categoryId: string;
     sortType: SortType;
@@ -13,7 +13,7 @@ interface FilterSliceState {
     currentPage: number;
 }
 
-export const initialState: FilterSliceState = {
+export const initialState: IFilterSliceState = {
     searchValue: "",
     categoryId: "",
     sortType: {
@@ -43,7 +43,7 @@ export const filterSlice = createSlice({
         setCurrentPage(state, action: PayloadAction<number>) {
             state.currentPage = action.payload;
         },
-        setFilters(state, action: PayloadAction<FilterSliceState>) {
+        setFilters(state, action: PayloadAction<IFilterSliceState>) {
             state.categoryId = action.payload.categoryId;
             state.sortType = action.payload.sortType;
             state.sortOrder = action.payload.sortOrder.toString() === "true";
