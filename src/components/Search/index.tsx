@@ -1,10 +1,17 @@
-import React, { useState, useRef, useCallback, FC, ChangeEvent, MouseEvent } from "react";
+import React, {
+    useState,
+    useRef,
+    useCallback,
+    FC,
+    ChangeEvent,
+    MouseEvent,
+} from "react";
 import styles from "./Search.module.scss";
 import debounce from "lodash.debounce";
 import { useDispatch } from "react-redux";
 import { setSearchValue } from "../../redux/slices/filterSlice";
 
-export const Search: FC = () => {
+const Search: FC = () => {
     const [value, setValue] = useState("");
     const inputRef = useRef<HTMLInputElement>(null);
     const dispatch = useDispatch();
@@ -108,3 +115,5 @@ export const Search: FC = () => {
         </div>
     );
 };
+
+export default Search;

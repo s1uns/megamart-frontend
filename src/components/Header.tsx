@@ -1,13 +1,12 @@
-import { useEffect, useRef } from "react";
+import { FC, useEffect, useRef } from "react";
 import logoSVG from "../assets/img/MegaMartLogo.svg";
 import { Link, useLocation } from "react-router-dom";
-import { Search } from "./Search";
+import Search from "../components/Search";
 import { useSelector } from "react-redux";
 import { selectCart } from "../redux/slices/cartSlice";
-import { calcTotalPrice } from "../utils/calcTotalPrice";
 import { calcTotalCount } from "../utils/calcTotalCount";
 
-export default function Header() {
+const Header: FC = () => {
     const { totalPrice, items } = useSelector(selectCart);
     const location = useLocation();
     const isMounted = useRef(false);
@@ -74,4 +73,5 @@ export default function Header() {
             </div>
         </div>
     );
-}
+};
+export default Header;

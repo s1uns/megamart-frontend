@@ -1,11 +1,10 @@
 import React, { FC, useCallback, useContext } from "react";
 import Categories from "../components/Categories";
-import Sort, { sortList } from "../components/Sort";
-import GoodBlock from "../components/GoodBlock";
+import { sortList } from "../components/Sort";
 import { useEffect, useRef } from "react";
-import Skeleton from "../components/GoodBlock/Skeleton";
-import Pagination from "../components/Pagination";
-import { useDispatch, useSelector } from "react-redux";
+
+import { Sort, GoodBlock, Skeleton, Pagination } from "../components";
+import { useSelector } from "react-redux";
 import {
     initialState,
     setCategoryId,

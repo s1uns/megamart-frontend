@@ -1,10 +1,18 @@
 import "./scss/app.scss";
+import { lazy, Suspense } from "react";
 import Header from "./components/Header";
 import Home from "./pages/Home";
-import Cart from "./pages/Cart";
-import NotFound from "./pages/NotFound";
 import { Route, Routes } from "react-router-dom";
-import FullGood from "./pages/FullGood";
+import GoodSkeleton from "./pages/GoodSkeleton";
+import CartEmpty from "./components/CartEmpty";
+
+const Cart = lazy(() => import(/* webpackChunkName: "Cart" */ "./pages/Cart"));
+const FullGood = lazy(
+    () => import(/* webpackChunkName: "FullGood" */ "./pages/FullGood")
+);
+const NotFound = lazy(
+    () => import(/* webpackChunkName: "NotFound" */ "./pages/NotFound")
+);
 
 function App() {
     return (
@@ -13,9 +21,30 @@ function App() {
             <div className="content">
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/cart" element={<Cart />} />
-                    <Route path="/goods/:id" element={<FullGood />} />
-                    <Route path="*" element={<NotFound />} />
+                    <Route
+                        path="/cart"
+                        element={
+                            <Suspense fallback={<CartEmpty />}>
+                                <Cart />
+                            </Suspense>
+                        }
+                    />
+                    <Route
+                        path="/goods/:id"
+                        element={
+                            <Suspense fallback={<GoodSkeleton />}>
+                                <FullGood />
+                            </Suspense>
+                        }
+                    />
+                    <Route
+                        path="*"
+                        element={
+                            <Suspense>
+                                <NotFound />
+                            </Suspense>
+                        }
+                    />
                 </Routes>
             </div>
         </div>
