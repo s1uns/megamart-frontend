@@ -1,11 +1,10 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
-
 export enum Status {
     PROCESSING = "processing",
     SUCCESS = "success",
-    FAILED = "failed"
+    FAILED = "failed",
 }
 export type Filters = {
     currentPage: number;
@@ -32,13 +31,13 @@ type GoodsResponse = {
     totalPages: number;
 };
 
-interface GoodsSliceState {
+interface IGoodsSliceState {
     items: Good[];
     totalPages: number;
     status: Status;
 }
 
-const initialState: GoodsSliceState = {
+const initialState: IGoodsSliceState = {
     items: [],
     totalPages: 0,
     status: Status.PROCESSING, // processing | success | failed

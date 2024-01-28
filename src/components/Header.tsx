@@ -1,13 +1,24 @@
-import React from "react";
+import { useEffect, useRef } from "react";
 import logoSVG from "../assets/img/MegaMartLogo.svg";
 import { Link, useLocation } from "react-router-dom";
 import { Search } from "./Search";
 import { useSelector } from "react-redux";
 import { selectCart } from "../redux/slices/cartSlice";
+import { calcTotalPrice } from "../utils/calcTotalPrice";
+import { calcTotalCount } from "../utils/calcTotalCount";
 
 export default function Header() {
     const { totalPrice, items } = useSelector(selectCart);
     const location = useLocation();
+    const isMounted = useRef(false);
+
+    useEffect(() => {
+        if (isMounted.current) {
+            const json = JSON.stringify(items || null);
+            localStorage.setItem("cart", json);
+        }
+        isMounted.current = true;
+    }, [items]);
     return (
         <div className="header">
             <div className="container">
@@ -56,13 +67,7 @@ export default function Header() {
                                     strokeLinejoin="round"
                                 />
                             </svg>
-                            <span>
-                                {items.reduce(
-                                    (count: number, item: any) =>
-                                        count + item.count,
-                                    0
-                                )}
-                            </span>
+                            <span>{calcTotalCount(items)}</span>
                         </Link>
                     )}
                 </div>
