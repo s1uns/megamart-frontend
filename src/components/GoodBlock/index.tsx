@@ -11,7 +11,7 @@ type GoodBlockProps = {
     sellerName: string;
 };
 
-const GoodBlock: FC<GoodBlockProps> = ({
+export const GoodBlock: FC<GoodBlockProps> = ({
     id,
     title,
     description,
@@ -49,4 +49,3 @@ const GoodBlock: FC<GoodBlockProps> = ({
     );
 };
 
-export default GoodBlock;

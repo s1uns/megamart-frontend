@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import ContentLoader from "react-content-loader";
 
-const Skeleton: FC = () => (
+export const Skeleton: FC = () => (
     <ContentLoader
         className="good-block"
         speed={2}
@@ -20,4 +20,3 @@ const Skeleton: FC = () => (
     </ContentLoader>
 );
 
-export default Skeleton;

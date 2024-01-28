@@ -1,8 +1,8 @@
-import React from 'react'
-import NotFoundBlock from '../components/NotFoundBlock';
+import React from "react";
+import { NotFoundBlock } from "../components";
 
 const NotFound = () => {
-  return <NotFoundBlock />
-}
+    return <NotFoundBlock />;
+};
 
 export default NotFound;

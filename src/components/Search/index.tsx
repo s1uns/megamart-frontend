@@ -1,4 +1,11 @@
-import React, { useState, useRef, useCallback, FC, ChangeEvent, MouseEvent } from "react";
+import React, {
+    useState,
+    useRef,
+    useCallback,
+    FC,
+    ChangeEvent,
+    MouseEvent,
+} from "react";
 import styles from "./Search.module.scss";
 import debounce from "lodash.debounce";
 import { useDispatch } from "react-redux";
@@ -108,3 +115,4 @@ export const Search: FC = () => {
         </div>
     );
 };
+

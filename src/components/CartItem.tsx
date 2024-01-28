@@ -19,7 +19,7 @@ type CartItemProps = {
     imageUrl: string;
 };
 
-const CartItem: FC<CartItemProps> = ({
+export const CartItem: FC<CartItemProps> = ({
     id,
     title,
     option,
@@ -124,4 +124,3 @@ const CartItem: FC<CartItemProps> = ({
     );
 };
 
-export default CartItem;
