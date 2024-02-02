@@ -11,12 +11,14 @@
             margin-right: 10px;
             margin-top: 5px;
             font-weight: bold;
+            border: 0.1px dotted black;
             cursor: pointer;
             transition: background-color 0.1s ease-in-out;
             @include noselect();
 
             &:hover {
                 background-color: darken(#f9f9f9, 2%) !important;
+                border: 0.1px dashed black;
             }
 
             &:active {
@@ -26,7 +28,8 @@
             &.active {
                 background-color: #282828 !important;
                 color: #fff !important;
-                box-shadow: inset 5px 5px 5px #0000FF, inset -5px -5px 7px #FFFF00;
+                box-shadow: inset 5px 5px 5px #0000ff,
+                    inset -5px -5px 7px #ffff00;
             }
         }
     }
