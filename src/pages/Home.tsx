@@ -27,10 +27,13 @@ const Home: FC = () => {
     const isMounted = useRef(false);
     const sortProperty = sortType.sortProperty;
     const navigate = useNavigate();
-
     const onChangeCategory = useCallback((categoryId: string) => {
         dispatch(setCategoryId(categoryId));
     }, []);
+
+    if (currentPage + 1 > totalPages) {
+        dispatch(setCurrentPage(totalPages - 1 >= 0 ? totalPages - 1 : 0));
+    }
 
     const onChangePage = (page: number) => {
         dispatch(setCurrentPage(page));
@@ -47,7 +50,7 @@ const Home: FC = () => {
                     searchValue,
                 })
             );
-            // setTotalPages(items.data.totalPages);
+// setTotalPages(items.data.totalPages);
         } catch (error) {
             console.log(error);
         } finally {
@@ -92,6 +95,21 @@ const Home: FC = () => {
             isFilter.current = true;
         }
     }, []);
+
+    //If params were changed and the first render occured
+    useEffect(() => {
+        if (isMounted.current) {
+            const queryString = qs.stringify({
+                sortProperty: sortType.sortProperty,
+                sortOrder,
+                categoryId,
+                currentPage,
+            });
+            navigate(`?${queryString}`);
+        }
+
+        isMounted.current = true;
+    }, [categoryId, sortProperty, sortOrder, searchValue, currentPage]);
 
     //If the first render occured, fetch the items
     useEffect(() => {
