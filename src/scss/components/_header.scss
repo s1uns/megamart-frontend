@@ -4,7 +4,6 @@
     border-bottom: 1px solid $gray-line;
     padding: 40px 0;
 
-
     .container {
         display: flex;
         align-items: center;
@@ -13,7 +12,7 @@
         @media (max-width: 645px) {
             flex-direction: column-reverse;
 
-            .header__cart{
+            .header__cart {
                 margin-bottom: 20px;
             }
         }
@@ -21,6 +20,7 @@
 
     &__logo {
         display: flex;
+        padding: 5px 14px 14px 5px;
 
         img {
             margin-right: 15px;
@@ -36,6 +36,12 @@
 
         p {
             color: #7b7b7b;
+        }
+
+        &:hover {
+            cursor: pointer;
+            box-shadow: inset -5px -5px 9px #ffffff73,
+                inset 5px 5px 9px #5e687949;
         }
     }
 }
