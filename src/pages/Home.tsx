@@ -31,9 +31,9 @@ const Home: FC = () => {
         dispatch(setCategoryId(categoryId));
     }, []);
 
-    if (currentPage + 1 > totalPages) {
-        dispatch(setCurrentPage(totalPages - 1 >= 0 ? totalPages - 1 : 0));
-    }
+    // if (currentPage + 1 > totalPages) {
+    //     dispatch(setCurrentPage(totalPages - 1 >= 0 ? totalPages - 1 : 0));
+    // }
 
     const onChangePage = (page: number) => {
         dispatch(setCurrentPage(page));
@@ -50,7 +50,6 @@ const Home: FC = () => {
                     searchValue,
                 })
             );
-// setTotalPages(items.data.totalPages);
         } catch (error) {
             console.log(error);
         } finally {
@@ -83,9 +82,11 @@ const Home: FC = () => {
             );
             if (
                 initialState.categoryId === params.categoryId &&
-                initialState.sortType === sortType &&
+                initialState.sortType.sortProperty === sortType?.sortProperty &&
                 initialState.currentPage === Number(params.currentPage)
             ) {
+                console.log({ ...initialState });
+                console.log({ ...params });
                 getGoods();
             }
 
@@ -96,21 +97,6 @@ const Home: FC = () => {
         }
     }, []);
 
-    //If params were changed and the first render occured
-    useEffect(() => {
-        if (isMounted.current) {
-            const queryString = qs.stringify({
-                sortProperty: sortType.sortProperty,
-                sortOrder,
-                categoryId,
-                currentPage,
-            });
-            navigate(`?${queryString}`);
-        }
-
-        isMounted.current = true;
-    }, [categoryId, sortProperty, sortOrder, searchValue, currentPage]);
-
     //If the first render occured, fetch the items
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -120,6 +106,8 @@ const Home: FC = () => {
 
         isFilter.current = false;
     }, [categoryId, sortProperty, sortOrder, searchValue, currentPage]);
+
+    console.log(totalPages + " -> " + currentPage)
 
     return (
         <div className="container">
@@ -159,8 +147,10 @@ const Home: FC = () => {
                 </div>
             )}
 
+            
+
             <Pagination
-                currentPage={currentPage}
+                currentPage={currentPage + 1 <= totalPages ? currentPage : totalPages - 1}
                 onChangePage={onChangePage}
                 totalPages={totalPages}
             />
