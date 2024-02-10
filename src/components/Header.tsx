@@ -1,15 +1,21 @@
 import { FC, useEffect, useRef } from "react";
 import logoSVG from "../assets/img/MegaMartLogo.svg";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Search } from "../components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectCart } from "../redux/slices/cartSlice";
 import { calcTotalCount } from "../utils/calcTotalCount";
+import { resetFilters } from "../redux/slices/filterSlice";
 
 export const Header: FC = () => {
     const { totalPrice, items } = useSelector(selectCart);
     const location = useLocation();
     const isMounted = useRef(false);
+    const dispatch = useDispatch();
+
+    const navigateToHome = () => {
+        dispatch(resetFilters());
+    };
 
     useEffect(() => {
         if (isMounted.current) {
@@ -18,10 +24,11 @@ export const Header: FC = () => {
         }
         isMounted.current = true;
     }, [items]);
+
     return (
         <div className="header">
             <div className="container">
-                <Link to="/">
+                <Link onClick={navigateToHome} to="/">
                     <div className="header__logo">
                         <img width="51" src={logoSVG} alt="Pizza logo" />
                         <div>

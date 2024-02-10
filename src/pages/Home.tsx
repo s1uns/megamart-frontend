@@ -27,10 +27,13 @@ const Home: FC = () => {
     const isMounted = useRef(false);
     const sortProperty = sortType.sortProperty;
     const navigate = useNavigate();
-
     const onChangeCategory = useCallback((categoryId: string) => {
         dispatch(setCategoryId(categoryId));
     }, []);
+
+    // if (currentPage + 1 > totalPages) {
+    //     dispatch(setCurrentPage(totalPages - 1 >= 0 ? totalPages - 1 : 0));
+    // }
 
     const onChangePage = (page: number) => {
         dispatch(setCurrentPage(page));
@@ -47,7 +50,6 @@ const Home: FC = () => {
                     searchValue,
                 })
             );
-            // setTotalPages(items.data.totalPages);
         } catch (error) {
             console.log(error);
         } finally {
@@ -80,9 +82,11 @@ const Home: FC = () => {
             );
             if (
                 initialState.categoryId === params.categoryId &&
-                initialState.sortType === sortType &&
+                initialState.sortType.sortProperty === sortType?.sortProperty &&
                 initialState.currentPage === Number(params.currentPage)
             ) {
+                console.log({ ...initialState });
+                console.log({ ...params });
                 getGoods();
             }
 
@@ -102,6 +106,8 @@ const Home: FC = () => {
 
         isFilter.current = false;
     }, [categoryId, sortProperty, sortOrder, searchValue, currentPage]);
+
+    console.log(totalPages + " -> " + currentPage)
 
     return (
         <div className="container">
@@ -141,8 +147,10 @@ const Home: FC = () => {
                 </div>
             )}
 
+            
+
             <Pagination
-                currentPage={currentPage}
+                currentPage={currentPage + 1 <= totalPages ? currentPage : totalPages - 1}
                 onChangePage={onChangePage}
                 totalPages={totalPages}
             />

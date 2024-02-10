@@ -49,6 +49,9 @@ export const filterSlice = createSlice({
             state.sortOrder = action.payload.sortOrder.toString() === "true";
             state.currentPage = Number(action.payload.currentPage);
         },
+        resetFilters(state) {
+            Object.assign(state, initialState);
+        },
     },
 });
 export const {
@@ -58,6 +61,7 @@ export const {
     setCurrentPage,
     setFilters,
     setSearchValue,
+    resetFilters,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;
