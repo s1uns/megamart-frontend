@@ -13,16 +13,23 @@ type GoodFullInfo = {
     description: string;
     price: number;
     imgUrl: string;
-    sellerName: string;
+    sellerId: string;
     goodOptions: {
         id: string;
         optionName: string;
     }[];
 };
 
+type SellerInfo = {
+    sellerId: string;
+    sellerName: string;
+    sellerPicUrl: string;
+};
+
 const FullGood: FC = () => {
     const { id } = useParams();
     const [goodInfo, setGoodInfo] = useState<GoodFullInfo>();
+    const [sellerInfo, setSellerInfo] = useState<SellerInfo>();
     const [activeOption, setActiveOption] = useState<{
         id: string;
         optionName: string;
@@ -46,7 +53,7 @@ const FullGood: FC = () => {
                     id: activeOption.id,
                     optionName: activeOption.optionName || "",
                 },
-                count: 0
+                count: 0,
             };
 
             dispatch(addItem(item));
@@ -71,6 +78,21 @@ const FullGood: FC = () => {
         fetchGood();
     }, [id]);
 
+    useEffect(() => {
+        async function fetchGood() {
+            try {
+                const { data } = await axios.get(
+                    `https:localhost:7295/api/goods/${id}/seller-info`
+                );
+                setSellerInfo(data);
+            } catch (error) {
+                setSellerInfo(undefined);
+            }
+        }
+
+        fetchGood();
+    }, [id]);
+
     if (!goodInfo) {
         return <GoodSkeleton />;
     }
@@ -80,13 +102,28 @@ const FullGood: FC = () => {
             <div className="good-info__img-container">
                 <img src={goodInfo.imgUrl} />
             </div>
-            <div className="good-info__description">
-                <div className="top">
-                    <h1>{goodInfo.name}</h1>
-                    <p>{goodInfo.price} $</p>
+            <div className="good-info_full-information">
+                <div className="good-info__seller">
+                    <div className="good-info__seller__img-container">
+                        <img src={sellerInfo?.sellerPicUrl} />
+                    </div>
+                    <div className="good-info__seller__info">
+                        <div> Seller:</div>
+                        <div className="name">{sellerInfo?.sellerName}</div>
+                    </div>
+                    <div className="good-info__rating">
+                        <div> Product rating:</div>
+                        <div className="rating">★ ★ ★ ★ ☆</div>
+                    </div>
                 </div>
-                <div className="bottom">
-                    <p>{goodInfo.description}</p>
+                <div className="good-info__description">
+                    <div className="top">
+                        <h1>{goodInfo.name}</h1>
+                        <p>{goodInfo.price} $</p>
+                    </div>
+                    <div className="bottom">
+                        <p>{goodInfo.description}</p>
+                    </div>
                 </div>
             </div>
             <div className="good-info__selection">
