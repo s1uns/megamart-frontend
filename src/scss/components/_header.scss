@@ -21,6 +21,7 @@
     &__logo {
         display: flex;
         padding: 5px 14px 14px 5px;
+        transition: 0.3s;
 
         img {
             margin-right: 15px;
@@ -42,6 +43,8 @@
             cursor: pointer;
             box-shadow: inset -5px -5px 9px #ffffff73,
                 inset 5px 5px 9px #5e687949;
+            border-radius: 10px;
+            transition: 0.3s;
         }
     }
 }
