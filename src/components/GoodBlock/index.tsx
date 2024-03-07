@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../../redux/slices/cartSlice";
 
-type GoodBlockProps = {
+export type GoodBlockProps = {
     id: string;
     title: string;
     description: string;
