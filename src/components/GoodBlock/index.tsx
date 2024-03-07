@@ -39,13 +39,9 @@ export const GoodBlock: FC<GoodBlockProps> = ({
                 <h4 className="good-block__title">{title}</h4>
                 <div className="good-block__bottom">
                     <div className="good-block__price">{price} $</div>
-                    <div className="seller">
-                        <div> Seller:</div>
-                        <div className="name">{sellerName}</div>
-                    </div>
+                    <div className="good-block__rating">★ ★ ★ ☆ ☆</div>
                 </div>
             </div>
         </div>
     );
 };
-
