@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import { Route, Routes } from "react-router-dom";
 import GoodSkeleton from "./pages/GoodSkeleton";
 import { CartEmpty } from "./components";
+import { SellerPublicProfile } from "./components/SellerPublicProfile";
 
 const Cart = lazy(() => import(/* webpackChunkName: "Cart" */ "./pages/Cart"));
 const FullGood = lazy(
@@ -34,6 +35,14 @@ function App() {
                         element={
                             <Suspense fallback={<GoodSkeleton />}>
                                 <FullGood />
+                            </Suspense>
+                        }
+                    />
+                    <Route
+                        path="/Profile/sellers/:id"
+                        element={
+                            <Suspense fallback={<GoodSkeleton />}>
+                                <SellerPublicProfile />
                             </Suspense>
                         }
                     />

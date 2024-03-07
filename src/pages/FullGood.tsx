@@ -1,6 +1,6 @@
 import axios from "axios";
-import React, { FC, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { FC, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import NotFound from "./NotFound";
 import { useDispatch, useSelector } from "react-redux";
 import { CartItemObject, addItem } from "../redux/slices/cartSlice";
@@ -79,7 +79,7 @@ const FullGood: FC = () => {
     }, [id]);
 
     useEffect(() => {
-        async function fetchGood() {
+        async function fetchSeller() {
             try {
                 const { data } = await axios.get(
                     `https:localhost:7295/api/goods/${id}/seller-info`
@@ -90,7 +90,7 @@ const FullGood: FC = () => {
             }
         }
 
-        fetchGood();
+        fetchSeller();
     }, [id]);
 
     if (!goodInfo) {
@@ -103,6 +103,8 @@ const FullGood: FC = () => {
                 <img src={goodInfo.imgUrl} />
             </div>
             <div className="good-info_full-information">
+            <Link to={`/Profile/sellers/${sellerInfo?.sellerId}`}>
+
                 <div className="good-info__seller">
                     <div className="good-info__seller__img-container">
                         <img src={sellerInfo?.sellerPicUrl} />
@@ -116,6 +118,7 @@ const FullGood: FC = () => {
                         <div className="rating">★ ★ ★ ★ ☆</div>
                     </div>
                 </div>
+                </Link>
                 <div className="good-info__description">
                     <div className="top">
                         <h1>{goodInfo.name}</h1>
