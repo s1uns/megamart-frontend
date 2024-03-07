@@ -1,11 +1,13 @@
 import axios from "axios";
 import React, { FC, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { GoodBlockProps } from "../GoodBlock";
+import { Link, useParams } from "react-router-dom";
+import { GoodBlock, GoodBlockProps } from "../GoodBlock";
 import GoodSkeleton from "../../pages/GoodSkeleton";
 import styles from "./SellerPublicProfile.module.scss";
 import { formatDate } from "../../utils/formatDate";
 import { Verified } from "./Verified";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 type SellerInfo = {
     email: string;
@@ -64,6 +66,76 @@ export const SellerPublicProfile: FC = () => {
                     <p>Overall shop rating: ★ ★ ★ ☆ ☆</p>
                 </div>
             </div>
+            <hr />
+            <h1 style={{ marginLeft: "25px" }}>{sellerInfo.name}'s Goods</h1>
+            <Carousel
+                additionalTransfrom={0}
+                arrows
+                autoPlay
+                autoPlaySpeed={3000}
+                centerMode={false}
+                className={styles.carousel}
+                containerClass="container-with-dots"
+                dotListClass=""
+                draggable
+                focusOnSelect={false}
+                infinite
+                itemClass=""
+                keyBoardControl
+                minimumTouchDrag={80}
+                pauseOnHover
+                renderArrowsWhenDisabled={false}
+                renderButtonGroupOutside={false}
+                renderDotsOutside={false}
+                responsive={{
+                    desktop: {
+                        breakpoint: {
+                            max: 3000,
+                            min: 1024,
+                        },
+                        items: 4.5,
+                        partialVisibilityGutter: 40,
+                    },
+                    mobile: {
+                        breakpoint: {
+                            max: 464,
+                            min: 0,
+                        },
+                        items: 1,
+                        partialVisibilityGutter: 30,
+                    },
+                    tablet: {
+                        breakpoint: {
+                            max: 1024,
+                            min: 464,
+                        },
+                        items: 2,
+                        partialVisibilityGutter: 30,
+                    },
+                }}
+                rewind={false}
+                rewindWithAnimation={false}
+                rtl={false}
+                shouldResetAutoplay
+                showDots={false}
+                sliderClass=""
+                slidesToSlide={2}
+                swipeable
+            >
+                {sellerInfo.goods.map((item: any) => (
+                    <Link key={item.id} to={`/goods/${item.id}`}>
+                        <GoodBlock
+                            id={item.id}
+                            title={item.name}
+                            description={item.description}
+                            price={item.price}
+                            imageUrl={item.imgUrl}
+                            sellerName={item.sellerName}
+                        />
+                    </Link>
+                ))}
+            </Carousel>
+            <hr />
         </>
     );
 };
