@@ -7,6 +7,11 @@ body {
     background-color: $background;
 }
 
+hr {
+    border-top: 3px solid $gray;
+    border-radius: 5px;
+    opacity: 0.3;
+}
 .wrapper {
     width: calc(100vw - 100px);
     height: 100%;
