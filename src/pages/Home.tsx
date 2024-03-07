@@ -31,10 +31,6 @@ const Home: FC = () => {
         dispatch(setCategoryId(categoryId));
     }, []);
 
-    // if (currentPage + 1 > totalPages) {
-    //     dispatch(setCurrentPage(totalPages - 1 >= 0 ? totalPages - 1 : 0));
-    // }
-
     const onChangePage = (page: number) => {
         dispatch(setCurrentPage(page));
     };
@@ -107,8 +103,6 @@ const Home: FC = () => {
         isFilter.current = false;
     }, [categoryId, sortProperty, sortOrder, searchValue, currentPage]);
 
-    console.log(totalPages + " -> " + currentPage)
-
     return (
         <div className="container">
             <div className="content__top">
@@ -147,10 +141,10 @@ const Home: FC = () => {
                 </div>
             )}
 
-            
-
             <Pagination
-                currentPage={currentPage + 1 <= totalPages ? currentPage : totalPages - 1}
+                currentPage={
+                    currentPage + 1 <= totalPages ? currentPage : totalPages - 1
+                }
                 onChangePage={onChangePage}
                 totalPages={totalPages}
             />

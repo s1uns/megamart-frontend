@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../../redux/slices/cartSlice";
 
-type GoodBlockProps = {
+export type GoodBlockProps = {
     id: string;
     title: string;
     description: string;
@@ -39,13 +39,9 @@ export const GoodBlock: FC<GoodBlockProps> = ({
                 <h4 className="good-block__title">{title}</h4>
                 <div className="good-block__bottom">
                     <div className="good-block__price">{price} $</div>
-                    <div className="seller">
-                        <div> Seller:</div>
-                        <div className="name">{sellerName}</div>
-                    </div>
+                    <div className="good-block__rating">★ ★ ★ ☆ ☆</div>
                 </div>
             </div>
         </div>
     );
 };
-
