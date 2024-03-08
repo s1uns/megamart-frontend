@@ -8,6 +8,7 @@ import { formatDate } from "../../utils/formatDate";
 import { Verified } from "./Verified";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import Rating from "@mui/material/Rating/Rating";
 
 type SellerInfo = {
     email: string;
@@ -20,9 +21,13 @@ type SellerInfo = {
     isVerified: boolean;
 };
 
+type SellerRating = {
+    value: number;
+};
 export const SellerPublicProfile: FC = () => {
     const { id } = useParams();
     const [sellerInfo, setSellerInfo] = useState<SellerInfo>();
+    const [rating, setRating] = useState<SellerRating>({ value: 0 });
 
     useEffect(() => {
         async function fetchSeller() {
@@ -37,6 +42,21 @@ export const SellerPublicProfile: FC = () => {
         }
 
         fetchSeller();
+    }, [id]);
+
+    useEffect(() => {
+        async function fetchSellersRating() {
+            try {
+                const { data } = await axios.get(
+                    `https:localhost:7295/api/Rating/seller/${id}`
+                );
+                setRating(data);
+            } catch (error) {
+                setRating({ value: 0 });
+            }
+        }
+
+        fetchSellersRating();
     }, [id]);
 
     if (!sellerInfo) {
@@ -63,7 +83,20 @@ export const SellerPublicProfile: FC = () => {
                         </a>
                     </p>
                     <p>On MegaMart since: {formatDate(sellerInfo.createdAt)}</p>
-                    <p>Overall shop rating: ★ ★ ★ ☆ ☆</p>
+                    <p>
+                        Overall shop rating:{" "}
+                        <Rating
+                            style={{
+                                position: "relative",
+                                top: "5px"
+                            }}
+                            name="size-large"
+                            defaultValue={rating.value}
+                            precision={0.5}
+                            size="large"
+                            readOnly
+                        />
+                    </p>
                 </div>
             </div>
             <hr />
@@ -131,6 +164,7 @@ export const SellerPublicProfile: FC = () => {
                             price={item.price}
                             imageUrl={item.imgUrl}
                             sellerName={item.sellerName}
+                            rating={item.rating}
                         />
                     </Link>
                 ))}
