@@ -81,8 +81,6 @@ const Home: FC = () => {
                 initialState.sortType.sortProperty === sortType?.sortProperty &&
                 initialState.currentPage === Number(params.currentPage)
             ) {
-                console.log({ ...initialState });
-                console.log({ ...params });
                 getGoods();
             }
 
@@ -135,6 +133,7 @@ const Home: FC = () => {
                                       price={item.price}
                                       imageUrl={item.imgUrl}
                                       sellerName={item.sellerName}
+                                      rating={item.rating}
                                   />
                               </Link>
                           ))}

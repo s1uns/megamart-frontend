@@ -1,6 +1,7 @@
 import React, { FC, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../../redux/slices/cartSlice";
+import { Rating } from "@mui/material";
 
 export type GoodBlockProps = {
     id: string;
@@ -9,6 +10,7 @@ export type GoodBlockProps = {
     price: number;
     imageUrl: string;
     sellerName: string;
+    rating: number;
 };
 
 export const GoodBlock: FC<GoodBlockProps> = ({
@@ -18,6 +20,7 @@ export const GoodBlock: FC<GoodBlockProps> = ({
     price,
     imageUrl,
     sellerName,
+    rating,
 }) => {
     return (
         <div className="good-block-wrapper">
@@ -39,7 +42,15 @@ export const GoodBlock: FC<GoodBlockProps> = ({
                 <h4 className="good-block__title">{title}</h4>
                 <div className="good-block__bottom">
                     <div className="good-block__price">{price} $</div>
-                    <div className="good-block__rating">★ ★ ★ ☆ ☆</div>
+                    <div className="good-block__rating">
+                        <Rating
+                            name="size-small"
+                            defaultValue={rating}
+                            precision={0.5}
+                            size="small"
+                            readOnly
+                        />
+                    </div>
                 </div>
             </div>
         </div>

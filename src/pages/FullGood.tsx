@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { CartItemObject, addItem } from "../redux/slices/cartSlice";
 import GoodSkeleton from "./GoodSkeleton";
 import { RootState } from "../redux/store";
+import Rating from "@mui/material/Rating/Rating";
 
 type GoodFullInfo = {
     id: string;
@@ -18,6 +19,7 @@ type GoodFullInfo = {
         id: string;
         optionName: string;
     }[];
+    rating: number;
 };
 
 type SellerInfo = {
@@ -103,21 +105,33 @@ const FullGood: FC = () => {
                 <img src={goodInfo.imgUrl} />
             </div>
             <div className="good-info_full-information">
-            <Link to={`/Profile/sellers/${sellerInfo?.sellerId}`}>
-
-                <div className="good-info__seller">
-                    <div className="good-info__seller__img-container">
-                        <img src={sellerInfo?.sellerPicUrl} />
+                <Link to={`/Profile/sellers/${sellerInfo?.sellerId}`}>
+                    <div className="good-info__seller">
+                        <div className="good-info__seller__img-container">
+                            <img src={sellerInfo?.sellerPicUrl} />
+                        </div>
+                        <div className="good-info__seller__info">
+                            <div> Seller:</div>
+                            <div className="name">{sellerInfo?.sellerName}</div>
+                        </div>
+                        <div className="good-info__rating">
+                            <div> Product rating:</div>
+                            <div className="rating">
+                                <Rating
+                                    style={{
+                                        position: "relative",
+                                        top: "7px",
+                                        left: "-10px",
+                                        fontSize: "40px",
+                                    }}
+                                    name="size-large"
+                                    defaultValue={goodInfo.rating}
+                                    precision={0.5}
+                                    size="large"
+                                />
+                            </div>
+                        </div>
                     </div>
-                    <div className="good-info__seller__info">
-                        <div> Seller:</div>
-                        <div className="name">{sellerInfo?.sellerName}</div>
-                    </div>
-                    <div className="good-info__rating">
-                        <div> Product rating:</div>
-                        <div className="rating">★ ★ ★ ★ ☆</div>
-                    </div>
-                </div>
                 </Link>
                 <div className="good-info__description">
                     <div className="top">
