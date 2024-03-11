@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import filter from "./slices/filterSlice";
 import cart from "./slices/cartSlice";
 import goods from "./slices/goodsSlice";
+import auth from "./slices/authSlice";
 import { useDispatch } from "react-redux";
 
 export const store = configureStore({
@@ -9,6 +10,7 @@ export const store = configureStore({
         filter,
         cart,
         goods,
+        auth,
     },
 });
 
